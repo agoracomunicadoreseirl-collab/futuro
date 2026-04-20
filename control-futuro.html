@@ -1,1 +1,247 @@
 
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Finanzas en pareja</title>
+  <script src="https://www.gstatic.com/charts/loader.js"></script>
+</head>
+<body>
+  <h1>Finanzas en pareja</h1>
+
+  <p><strong>Periodo actual:</strong> <span id="periodo">-</span></p>
+
+  <h2>Indicadores</h2>
+  <p>Ingresos recibidos: <span id="ingresos">0</span></p>
+  <p>Egresos pagados: <span id="egresos">0</span></p>
+  <p>Pendiente por pagar: <span id="pendiente">0</span></p>
+  <p>Total actual: <span id="totalActual">0</span></p>
+  <p>Cuánto quedará: <span id="quedara">0</span></p>
+  <p>Libre para gastar: <span id="libre">0</span></p>
+
+  <hr>
+
+  <h2>Registrar movimiento</h2>
+  <form id="formMovimiento">
+    <p>
+      <label>Fecha</label><br>
+      <input type="date" name="fecha" required>
+    </p>
+
+    <p>
+      <label>Tipo</label><br>
+      <select name="tipo" required>
+        <option value="">Selecciona</option>
+        <option value="ingreso">Ingreso</option>
+        <option value="egreso">Egreso</option>
+      </select>
+    </p>
+
+    <p>
+      <label>Subtipo</label><br>
+      <input type="text" name="subtipo" placeholder="sueldo, comida, alquiler..." required>
+    </p>
+
+    <p>
+      <label>Frecuencia</label><br>
+      <select name="frecuencia" required>
+        <option value="eventual">Eventual</option>
+        <option value="quincenal">Quincenal</option>
+        <option value="mensual">Mensual</option>
+      </select>
+    </p>
+
+    <p>
+      <label>Persona</label><br>
+      <select name="persona" required>
+        <option value="">Selecciona</option>
+        <option value="persona1">Persona 1</option>
+        <option value="persona2">Persona 2</option>
+        <option value="ambos">Ambos</option>
+      </select>
+    </p>
+
+    <p>
+      <label>Categoría</label><br>
+      <input type="text" name="categoria" placeholder="hogar, transporte, sueldo..." required>
+    </p>
+
+    <p>
+      <label>Descripción</label><br>
+      <input type="text" name="descripcion" placeholder="detalle opcional">
+    </p>
+
+    <p>
+      <label>Monto</label><br>
+      <input type="number" name="monto" step="0.01" min="0.01" required>
+    </p>
+
+    <p>
+      <label>Estado</label><br>
+      <select name="estado" required>
+        <option value="">Selecciona</option>
+        <option value="recibido">Recibido</option>
+        <option value="pagado">Pagado</option>
+        <option value="pendiente">Pendiente</option>
+      </select>
+    </p>
+
+    <button type="submit">Guardar movimiento</button>
+  </form>
+
+  <hr>
+
+  <h2>Gráfico del mes</h2>
+  <div id="chart_div" style="width: 100%; max-width: 900px; height: 400px;"></div>
+
+  <hr>
+
+  <h2>Últimos movimientos</h2>
+  <table border="1" cellpadding="6" cellspacing="0">
+    <thead>
+      <tr>
+        <th>Fecha</th>
+        <th>Tipo</th>
+        <th>Subtipo</th>
+        <th>Frecuencia</th>
+        <th>Persona</th>
+        <th>Categoría</th>
+        <th>Descripción</th>
+        <th>Monto</th>
+        <th>Estado</th>
+      </tr>
+    </thead>
+    <tbody id="tbodyMovimientos"></tbody>
+  </table>
+
+  <script>
+    const API_URL = 'https://script.google.com/macros/s/AKfycbzm_cv0dSaEaWXTUau0PxpVtvW-U6KJuJXCnroiD_eT6iXbOPWPrQ1N_WK4-yzwzrwUiA/exec';
+
+    google.charts.load('current', { packages: ['corechart'] });
+
+    let chartReady = false;
+    google.charts.setOnLoadCallback(() => {
+      chartReady = true;
+    });
+
+    function formatMoney(value, currency = 'PEN') {
+      return new Intl.NumberFormat('es-PE', {
+        style: 'currency',
+        currency
+      }).format(Number(value || 0));
+    }
+
+    async function getDashboard() {
+      const response = await fetch(API_URL + '?action=dashboard');
+      const json = await response.json();
+
+      if (!json.ok) {
+        throw new Error(json.error || 'No se pudo cargar el dashboard');
+      }
+
+      return json.data;
+    }
+
+    async function addMovement(data) {
+      const body = new URLSearchParams();
+      body.append('action', 'addMovement');
+
+      Object.keys(data).forEach(key => {
+        body.append(key, data[key]);
+      });
+
+      const response = await fetch(API_URL, {
+        method: 'POST',
+        body
+      });
+
+      const json = await response.json();
+
+      if (!json.ok) {
+        throw new Error(json.error || 'No se pudo guardar');
+      }
+
+      return json.data;
+    }
+
+    function renderSummary(data) {
+      const moneda = data.moneda || 'PEN';
+      const summary = data.summary;
+
+      document.getElementById('periodo').textContent = data.periodo.mes + '/' + data.periodo.anio;
+      document.getElementById('ingresos').textContent = formatMoney(summary.ingresosRecibidos, moneda);
+      document.getElementById('egresos').textContent = formatMoney(summary.egresosPagados, moneda);
+      document.getElementById('pendiente').textContent = formatMoney(summary.pendientePorPagar, moneda);
+      document.getElementById('totalActual').textContent = formatMoney(summary.totalActual, moneda);
+      document.getElementById('quedara').textContent = formatMoney(summary.cuantoQuedara, moneda);
+      document.getElementById('libre').textContent = formatMoney(summary.libreParaGastar, moneda);
+    }
+
+    function renderTable(rows, currency = 'PEN') {
+      const tbody = document.getElementById('tbodyMovimientos');
+      tbody.innerHTML = '';
+
+      rows.forEach(row => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${row.fecha || ''}</td>
+          <td>${row.tipo || ''}</td>
+          <td>${row.subtipo || ''}</td>
+          <td>${row.frecuencia || ''}</td>
+          <td>${row.persona || ''}</td>
+          <td>${row.categoria || ''}</td>
+          <td>${row.descripcion || ''}</td>
+          <td>${formatMoney(row.monto || 0, currency)}</td>
+          <td>${row.estado || ''}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function drawChart(chartRows) {
+      if (!chartReady) {
+        setTimeout(() => drawChart(chartRows), 200);
+        return;
+      }
+
+      const data = google.visualization.arrayToDataTable(chartRows);
+
+      const options = {
+        legend: { position: 'none' },
+        height: 400
+      };
+
+      const chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+      chart.draw(data, options);
+    }
+
+    async function loadDashboard() {
+      const data = await getDashboard();
+      renderSummary(data);
+      renderTable(data.latest, data.moneda);
+      drawChart(data.chart);
+    }
+
+    document.getElementById('formMovimiento').addEventListener('submit', async (event) => {
+      event.preventDefault();
+
+      const formData = new FormData(event.target);
+      const data = Object.fromEntries(formData.entries());
+
+      try {
+        await addMovement(data);
+        event.target.reset();
+        await loadDashboard();
+        alert('Movimiento guardado');
+      } catch (error) {
+        alert(error.message);
+      }
+    });
+
+    loadDashboard().catch(error => {
+      alert('Error inicial: ' + error.message);
+    });
+  </script>
+</body>
+</html>
