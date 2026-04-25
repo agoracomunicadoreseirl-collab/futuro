@@ -9,7 +9,7 @@
       --bg: #f4f6fb;
       --card: #ffffff;
       --text: #111827;
-      --muted: #6b7280;
+      --muted: #64748b;
       --border: #d9e0ec;
       --primary: #2563eb;
       --primary-dark: #1d4ed8;
@@ -29,84 +29,33 @@
       color: var(--text);
     }
 
-    header {
-      background: linear-gradient(135deg, #0f172a, #1e293b);
-      color: #fff;
-      padding: 20px 14px;
-    }
-
-    .header-inner {
-      width: min(1200px, 100%);
-      margin: 0 auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 14px;
-      flex-wrap: wrap;
-    }
-
-    header h1 {
-      margin: 0 0 6px;
-      font-size: 23px;
-    }
-
-    header p {
-      margin: 0;
-      color: #cbd5e1;
-      font-size: 14px;
-    }
-
-    main {
-      width: min(1200px, 100%);
-      margin: 0 auto;
-      padding: 14px;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap: 12px;
-    }
-
-    .card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 14px;
-      box-shadow: 0 6px 18px rgba(15, 23, 42, 0.05);
-    }
-
-    .span-12 { grid-column: span 12; }
-    .span-8 { grid-column: span 8; }
-    .span-6 { grid-column: span 6; }
-    .span-4 { grid-column: span 4; }
-    .span-3 { grid-column: span 3; }
-
-    h2 {
-      margin: 0 0 12px;
-      font-size: 18px;
-    }
-
-    h3 {
-      margin: 0 0 8px;
+    button, input, select {
+      font-family: inherit;
       font-size: 15px;
     }
 
-    label {
-      display: block;
-      font-size: 12px;
-      font-weight: bold;
-      color: #374151;
-      margin-bottom: 5px;
+    button {
+      border: none;
+      border-radius: 12px;
+      padding: 12px 14px;
+      background: var(--primary);
+      color: #fff;
+      font-weight: 700;
+      cursor: pointer;
     }
 
-    input, select, button {
+    button:active { transform: scale(0.99); }
+    button.secondary { background: #334155; }
+    button.light { background: #e5e7eb; color: #111827; }
+    button.danger { background: var(--danger); }
+
+    input, select {
       width: 100%;
       border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 10px;
-      font-size: 14px;
+      border-radius: 12px;
+      padding: 12px;
       background: #fff;
+      color: var(--text);
     }
 
     input:focus, select:focus {
@@ -114,540 +63,732 @@
       border-color: var(--primary);
     }
 
-    button {
-      background: var(--primary);
-      color: #fff;
-      border: none;
-      cursor: pointer;
-      font-weight: bold;
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #334155;
     }
 
-    button:hover { background: var(--primary-dark); }
-    button.secondary { background: #334155; }
-    button.secondary:hover { background: #1e293b; }
-    button.danger { background: var(--danger); }
-    button.danger:hover { background: #b91c1c; }
-    button.light { background: #e5e7eb; color: #111827; }
-    button.light:hover { background: #d1d5db; }
+    .login-screen {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      background: linear-gradient(135deg, #0f172a, #1e293b);
+    }
 
-    .top-actions {
+    .login-card {
+      width: min(420px, 100%);
+      background: #fff;
+      border-radius: 22px;
+      padding: 20px;
+      box-shadow: 0 18px 60px rgba(0, 0, 0, 0.28);
+    }
+
+    .login-card h1 {
+      margin: 0 0 6px;
+      font-size: 24px;
+    }
+
+    .login-card p {
+      margin: 0 0 16px;
+      color: var(--muted);
+      line-height: 1.35;
+    }
+
+    .login-fields {
+      display: grid;
+      gap: 12px;
+    }
+
+    .remember-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .remember-row input { width: auto; }
+
+    .app {
+      display: none;
+      min-height: 100vh;
+      padding-bottom: 76px;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: var(--dark);
+      color: #fff;
+      padding: 12px 14px;
+      box-shadow: 0 8px 22px rgba(15, 23, 42, 0.18);
+    }
+
+    .header-inner {
+      width: min(1120px, 100%);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .hello small {
+      color: #cbd5e1;
+      display: block;
+      font-size: 12px;
+    }
+
+    .hello strong {
+      display: block;
+      font-size: 17px;
+      margin-top: 2px;
+    }
+
+    .header-actions {
       display: flex;
       gap: 8px;
-      flex-wrap: wrap;
+      align-items: center;
     }
 
-    .top-actions button {
-      width: auto;
-      padding: 9px 12px;
+    .header-actions button {
+      padding: 9px 11px;
+      font-size: 13px;
     }
 
-    .form-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
+    main {
+      width: min(1120px, 100%);
+      margin: 0 auto;
+      padding: 12px;
+    }
+
+    .view { display: none; }
+    .view.active { display: block; }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 14px;
+      box-shadow: 0 6px 18px rgba(15, 23, 42, 0.05);
+    }
+
+    .stack { display: grid; gap: 12px; }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       gap: 10px;
-      align-items: end;
+      margin-bottom: 10px;
     }
 
-    .filters {
-      display: grid;
-      grid-template-columns: 1.2fr 1fr 1fr 0.8fr;
-      gap: 10px;
-      align-items: end;
-      margin-bottom: 12px;
+    .section-title h2, .section-title h3 {
+      margin: 0;
+      font-size: 18px;
     }
 
-    .summary {
+    .section-title span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .quick-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
     }
 
     .metric {
       background: var(--soft);
       border: 1px solid var(--border);
-      border-radius: 12px;
+      border-radius: 16px;
       padding: 12px;
     }
 
     .metric span {
       display: block;
-      font-size: 12px;
       color: var(--muted);
+      font-size: 11px;
+      line-height: 1.25;
       margin-bottom: 5px;
     }
 
     .metric strong {
-      font-size: 20px;
+      font-size: 18px;
+      line-height: 1.1;
     }
 
     .metric.ok strong { color: var(--ok); }
     .metric.danger strong { color: var(--danger); }
     .metric.warn strong { color: var(--warn); }
 
-    .tabs {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin-bottom: 12px;
+    .form-one {
+      display: grid;
+      gap: 10px;
     }
 
-    .tab-btn {
-      width: auto;
+    .two-cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .segmented {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .segmented button {
       background: #e5e7eb;
       color: #111827;
-      padding: 9px 12px;
     }
 
-    .tab-btn.active {
+    .segmented button.active {
       background: var(--primary);
       color: #fff;
     }
 
-    .tab { display: none; }
-    .tab.active { display: block; }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
+    .status {
+      display: none;
+      padding: 10px;
+      border-radius: 12px;
       font-size: 13px;
+      background: #e0f2fe;
+      color: #075985;
     }
 
-    th, td {
-      border-bottom: 1px solid var(--border);
-      padding: 9px 7px;
-      text-align: left;
-      vertical-align: top;
+    .status.show { display: block; }
+    .status.ok { background: #dcfce7; color: #166534; }
+    .status.error { background: #fee2e2; color: #991b1b; }
+
+    .movement-list {
+      display: grid;
+      gap: 8px;
     }
 
-    th {
-      background: #f1f5f9;
-      color: #334155;
+    .movement-item {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px;
+      padding: 11px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: #fff;
+    }
+
+    .movement-item strong {
+      display: block;
+      font-size: 14px;
+      margin-bottom: 3px;
+    }
+
+    .movement-item small {
+      display: block;
+      color: var(--muted);
       font-size: 12px;
     }
 
-    .badge {
-      display: inline-block;
-      padding: 4px 7px;
-      border-radius: 999px;
-      font-size: 12px;
-      background: #e5e7eb;
+    .amount {
+      font-weight: 800;
       white-space: nowrap;
     }
 
-    .badge.ok { background: #dcfce7; color: #166534; }
-    .badge.danger { background: #fee2e2; color: #991b1b; }
-    .badge.warn { background: #fef3c7; color: #92400e; }
-    .badge.info { background: #dbeafe; color: #1e40af; }
+    .amount.expense { color: var(--danger); }
+    .amount.income { color: var(--ok); }
 
-    .progress-wrap {
-      background: #e5e7eb;
-      border-radius: 999px;
-      height: 9px;
-      overflow: hidden;
-      min-width: 90px;
+    .filters-row {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin-bottom: 12px;
     }
 
-    .progress-bar {
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    .chart-box {
+      min-height: 270px;
+    }
+
+    canvas {
+      width: 100%;
+      height: 220px;
+      display: block;
+    }
+
+    .decision-list {
+      display: grid;
+      gap: 8px;
+    }
+
+    .decision-item {
+      padding: 11px;
+      border-radius: 14px;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+    }
+
+    .decision-item strong {
+      display: block;
+      font-size: 14px;
+      margin-bottom: 3px;
+    }
+
+    .decision-item span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .category-list {
+      display: grid;
+      gap: 8px;
+    }
+
+    .category-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 10px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: #fff;
+    }
+
+    .category-item small {
+      display: block;
+      color: var(--muted);
+      margin-top: 3px;
+    }
+
+    .budget-row {
+      display: grid;
+      gap: 5px;
+      padding: 10px 0;
+      border-bottom: 1px solid #eef2f7;
+    }
+
+    .budget-row:last-child { border-bottom: 0; }
+
+    .budget-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      font-size: 13px;
+    }
+
+    .progress {
+      height: 9px;
+      background: #e5e7eb;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .bar {
       height: 100%;
       width: 0%;
       background: var(--ok);
     }
 
-    .progress-bar.warn { background: var(--warn); }
-    .progress-bar.danger { background: var(--danger); }
+    .bar.warn { background: var(--warn); }
+    .bar.danger { background: var(--danger); }
 
-    .small {
-      font-size: 12px;
-      color: var(--muted);
-    }
-
-    .actions {
-      display: flex;
-      gap: 6px;
-      flex-wrap: wrap;
-    }
-
-    .actions button {
-      width: auto;
-      padding: 7px 9px;
-      font-size: 12px;
-    }
-
-    .status {
-      margin: 10px 0 12px;
-      padding: 10px;
-      border-radius: 10px;
-      background: #e0f2fe;
-      color: #075985;
-      display: none;
-      font-size: 13px;
-    }
-
-    .status.show { display: block; }
-    .status.error { background: #fee2e2; color: #991b1b; }
-    .status.ok { background: #dcfce7; color: #166534; }
-
-    .chart-card {
-      min-height: 330px;
-    }
-
-    canvas {
-      width: 100%;
-      height: 260px;
-      display: block;
-    }
-
-    .lock-screen {
+    .bottom-nav {
       position: fixed;
-      inset: 0;
-      background: rgba(15, 23, 42, 0.92);
-      z-index: 999;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 16px;
-    }
-
-    .lock-box {
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 30;
       background: #fff;
-      width: min(380px, 100%);
-      border-radius: 18px;
-      padding: 20px;
-      box-shadow: 0 20px 70px rgba(0,0,0,0.35);
+      border-top: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      padding: 7px 8px 8px;
+      box-shadow: 0 -8px 24px rgba(15, 23, 42, 0.08);
     }
 
-    .lock-box h2 { margin-bottom: 6px; }
-    .lock-box p { color: var(--muted); font-size: 13px; margin-top: 0; }
+    .nav-btn {
+      background: transparent;
+      color: var(--muted);
+      padding: 8px 6px;
+      border-radius: 12px;
+      font-size: 12px;
+    }
+
+    .nav-btn.active {
+      background: #dbeafe;
+      color: #1e40af;
+    }
+
+    .desktop-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    @media (min-width: 760px) {
+      .app { padding-bottom: 0; }
+      .bottom-nav {
+        width: min(1120px, calc(100% - 24px));
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: 12px;
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        grid-template-columns: repeat(3, 1fr);
+      }
+      main { padding-bottom: 92px; }
+      .desktop-grid {
+        grid-template-columns: 0.9fr 1.1fr;
+        align-items: start;
+      }
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .filters-row {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+      .quick-grid { grid-template-columns: repeat(3, 1fr); }
+      .form-wide {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+      }
+    }
 
     @media print {
-      header, .tabs, .filters, .top-actions, form, .actions, #globalStatus, .no-print { display: none !important; }
+      header, .bottom-nav, .no-print, form, button { display: none !important; }
+      .app, .view.active { display: block !important; }
       body { background: #fff; }
       main { width: 100%; padding: 0; }
-      .card { box-shadow: none; border: 1px solid #ddd; page-break-inside: avoid; }
-      .tab { display: block !important; }
-      .tab:not(#tab-resumen) { display: none !important; }
-    }
-
-    @media (max-width: 850px) {
-      main { padding: 10px; }
-      .span-8, .span-6, .span-4, .span-3 { grid-column: span 12; }
-      .form-grid, .summary, .filters { grid-template-columns: 1fr; }
-      table, thead, tbody, th, td, tr { display: block; }
-      thead { display: none; }
-      tr {
-        border: 1px solid var(--border);
-        border-radius: 12px;
-        margin-bottom: 10px;
-        background: #fff;
-        overflow: hidden;
-      }
-      td {
-        border-bottom: 1px solid #eef2f7;
-        display: flex;
-        justify-content: space-between;
-        gap: 12px;
-      }
-      td::before {
-        content: attr(data-label);
-        font-weight: bold;
-        color: #475569;
-      }
+      .card { box-shadow: none; page-break-inside: avoid; }
     }
   </style>
 </head>
 <body>
-  <div class="lock-screen" id="lockScreen">
-    <div class="lock-box">
-      <h2>Acceso privado</h2>
-      <p>Ingresa el PIN configurado para ver el control de gastos.</p>
-      <label>PIN</label>
-      <input type="password" id="pinInput" placeholder="Ej. 1234" />
-      <br><br>
-      <button id="btnUnlock">Ingresar</button>
-      <p class="small">Este bloqueo es local y básico. Para seguridad real se necesita login con usuarios.</p>
-    </div>
-  </div>
-
-  <header>
-    <div class="header-inner">
-      <div>
-        <h1>Control de gastos en pareja</h1>
-        <p>Ingresos, gastos, presupuestos, ahorro, alertas y gráficos.</p>
-      </div>
-      <div class="top-actions">
-        <button class="secondary" id="btnPrint">Exportar PDF</button>
-        <button class="light" id="btnReloadTop">Recargar</button>
+  <section class="login-screen" id="loginScreen">
+    <div class="login-card">
+      <h1>Control de gastos</h1>
+      <p>Ingresa con tu usuario para que cada gasto quede asociado a quien lo registró.</p>
+      <div class="login-fields">
+        <div>
+          <label>Usuario</label>
+          <select id="loginUser"></select>
+        </div>
+        <div>
+          <label>Contraseña</label>
+          <input type="password" id="loginPassword" placeholder="Contraseña simple" />
+        </div>
+        <label class="remember-row">
+          <input type="checkbox" id="rememberLogin" />
+          Recordar este usuario en este celular
+        </label>
+        <button id="btnLogin">Ingresar</button>
+        <div id="loginStatus" class="status"></div>
       </div>
     </div>
-  </header>
+  </section>
 
-  <main>
-    <section class="card span-12">
-      <div class="tabs">
-        <button class="tab-btn active" data-tab="resumen">Resumen visual</button>
-        <button class="tab-btn" data-tab="movimientos">Movimientos</button>
-        <button class="tab-btn" data-tab="categorias">Categorías</button>
-        <button class="tab-btn" data-tab="configuracion">Configuración</button>
+  <section class="app" id="appShell">
+    <header>
+      <div class="header-inner">
+        <div class="hello">
+          <small>Sesión activa</small>
+          <strong id="activeUserLabel">Usuario</strong>
+        </div>
+        <div class="header-actions no-print">
+          <button class="secondary" id="btnPrint">PDF</button>
+          <button class="light" id="btnLogout">Salir</button>
+        </div>
       </div>
+    </header>
 
+    <main>
       <div id="globalStatus" class="status"></div>
 
-      <div class="filters no-print">
-        <div>
-          <label>Periodo</label>
-          <select id="filterPeriod">
-            <option value="today">Hoy</option>
-            <option value="week">Esta semana</option>
-            <option value="month" selected>Este mes</option>
-            <option value="all">Todo</option>
-            <option value="custom">Rango personalizado</option>
-          </select>
+      <section id="view-home" class="view active">
+        <div class="desktop-grid">
+          <div class="stack">
+            <div class="quick-grid">
+              <div class="metric danger"><span>Gasto de hoy</span><strong id="homeTodayTotal">S/ 0.00</strong></div>
+              <div class="metric warn"><span>Tu gasto hoy</span><strong id="homeUserToday">S/ 0.00</strong></div>
+              <div class="metric"><span>Gasto del mes</span><strong id="homeMonthTotal">S/ 0.00</strong></div>
+            </div>
+
+            <div class="card">
+              <div class="section-title">
+                <h2>Registrar rápido</h2>
+                <span id="todayLabel"></span>
+              </div>
+              <form id="quickForm" class="form-one">
+                <div>
+                  <label>Tipo</label>
+                  <div class="segmented">
+                    <button type="button" class="active" data-type="Gasto">Gasto</button>
+                    <button type="button" data-type="Ingreso">Ingreso</button>
+                  </div>
+                  <input type="hidden" id="quickType" value="Gasto" />
+                </div>
+
+                <div>
+                  <label>Monto</label>
+                  <input type="number" id="quickAmount" min="0" step="0.01" inputmode="decimal" placeholder="Ej. 25.50" required />
+                </div>
+
+                <div>
+                  <label>Motivo / descripción</label>
+                  <input type="text" id="quickDescription" placeholder="Ej. menú, pasaje, mercado" required />
+                </div>
+
+                <div class="two-cols">
+                  <div>
+                    <label>Fecha</label>
+                    <input type="date" id="quickDate" required />
+                  </div>
+                  <div>
+                    <label>Categoría</label>
+                    <select id="quickCategory" required></select>
+                  </div>
+                </div>
+
+                <div class="two-cols">
+                  <div>
+                    <label>Alcance</label>
+                    <select id="quickScope">
+                      <option value="Personal">Personal</option>
+                      <option value="Compartido">Compartido</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label>Medio</label>
+                    <select id="quickPayment">
+                      <option>Yape</option>
+                      <option>Plin</option>
+                      <option>Efectivo</option>
+                      <option>Tarjeta</option>
+                      <option>Transferencia</option>
+                      <option>Otro</option>
+                    </select>
+                  </div>
+                </div>
+
+                <button type="submit" id="btnSaveQuick">Guardar gasto</button>
+              </form>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="section-title">
+              <h3>Movimientos de hoy</h3>
+              <span id="todayCount">0 registros</span>
+            </div>
+            <div id="todayMovements" class="movement-list"></div>
+          </div>
         </div>
-        <div>
-          <label>Fecha inicio</label>
-          <input type="date" id="filterStart" />
-        </div>
-        <div>
-          <label>Fecha fin</label>
-          <input type="date" id="filterEnd" />
-        </div>
-        <button id="btnApplyFilter">Aplicar</button>
-      </div>
+      </section>
 
-      <div id="tab-resumen" class="tab active">
-        <h2>Resumen general</h2>
-        <div class="summary">
-          <div class="metric ok"><span>Ingresos del periodo</span><strong id="mIngresos">S/ 0.00</strong></div>
-          <div class="metric danger"><span>Gastos del periodo</span><strong id="mGastos">S/ 0.00</strong></div>
-          <div class="metric"><span>Ahorro sugerido</span><strong id="mAhorro">S/ 0.00</strong></div>
-          <div class="metric warn"><span>Saldo disponible</span><strong id="mSaldo">S/ 0.00</strong></div>
-        </div>
-
-        <br />
-
-        <div class="grid">
-          <div class="card span-6 chart-card">
-            <h3>Gastos por categoría</h3>
-            <canvas id="chartCategorias"></canvas>
-          </div>
-          <div class="card span-6 chart-card">
-            <h3>Gastos por persona</h3>
-            <canvas id="chartPersonas"></canvas>
-          </div>
-          <div class="card span-6 chart-card">
-            <h3>Evolución diaria: ingresos vs gastos</h3>
-            <canvas id="chartLinea"></canvas>
-          </div>
-          <div class="card span-6 chart-card">
-            <h3>Medios de pago más usados</h3>
-            <canvas id="chartMedios"></canvas>
+      <section id="view-stats" class="view">
+        <div class="card no-print">
+          <div class="filters-row">
+            <div>
+              <label>Periodo</label>
+              <select id="statsPeriod">
+                <option value="today">Hoy</option>
+                <option value="week">Esta semana</option>
+                <option value="month" selected>Este mes</option>
+                <option value="all">Todo</option>
+              </select>
+            </div>
+            <button id="btnReload">Actualizar datos</button>
+            <button class="secondary" id="btnPrintStats">Exportar PDF</button>
           </div>
         </div>
 
-        <br />
-
-        <div class="grid">
-          <div class="card span-6">
-            <h3>Presupuesto por categoría</h3>
-            <table>
-              <thead><tr><th>Categoría</th><th>Gastado</th><th>Presupuesto</th><th>Uso</th><th>Estado</th></tr></thead>
-              <tbody id="tablaCategoriasResumen"></tbody>
-            </table>
+        <div class="stack">
+          <div class="quick-grid">
+            <div class="metric ok"><span>Ingresos</span><strong id="statsIngresos">S/ 0.00</strong></div>
+            <div class="metric danger"><span>Gastos</span><strong id="statsGastos">S/ 0.00</strong></div>
+            <div class="metric warn"><span>Saldo estimado</span><strong id="statsSaldo">S/ 0.00</strong></div>
           </div>
-          <div class="card span-6">
-            <h3>Consolidado por persona</h3>
-            <table>
-              <thead><tr><th>Persona</th><th>Ingresos</th><th>Gastos</th><th>Saldo</th></tr></thead>
-              <tbody id="tablaPersonasResumen"></tbody>
-            </table>
+
+          <div class="stats-grid">
+            <div class="card chart-box">
+              <div class="section-title"><h3>¿Dónde se va el dinero?</h3></div>
+              <canvas id="chartCategorias"></canvas>
+            </div>
+            <div class="card chart-box">
+              <div class="section-title"><h3>Gasto por persona</h3></div>
+              <canvas id="chartPersonas"></canvas>
+            </div>
+          </div>
+
+          <div class="stats-grid">
+            <div class="card">
+              <div class="section-title"><h3>Decisiones rápidas</h3></div>
+              <div id="decisionList" class="decision-list"></div>
+            </div>
+            <div class="card">
+              <div class="section-title"><h3>Presupuesto usado</h3></div>
+              <div id="budgetList"></div>
+            </div>
           </div>
         </div>
-      </div>
+      </section>
 
-      <div id="tab-movimientos" class="tab">
-        <h2 id="movFormTitle">Registrar movimiento</h2>
-        <form id="formMovimiento" class="form-grid">
-          <input type="hidden" id="movId" />
-          <div>
-            <label>Fecha</label>
-            <input type="date" id="movFecha" required />
+      <section id="view-config" class="view">
+        <div class="stack">
+          <div class="card">
+            <div class="section-title"><h2>Usuarios e ingresos</h2></div>
+            <form id="configForm" class="form-one">
+              <div class="form-wide">
+                <div>
+                  <label>Usuario 1</label>
+                  <input type="text" id="cfgPersona1" required />
+                </div>
+                <div>
+                  <label>Contraseña usuario 1</label>
+                  <input type="text" id="cfgPassword1" placeholder="Ej. 1234" />
+                </div>
+                <div>
+                  <label>Ingreso mensual usuario 1</label>
+                  <input type="number" id="cfgIngreso1" min="0" step="0.01" />
+                </div>
+                <div>
+                  <label>Usuario 2</label>
+                  <input type="text" id="cfgPersona2" required />
+                </div>
+                <div>
+                  <label>Contraseña usuario 2</label>
+                  <input type="text" id="cfgPassword2" placeholder="Ej. 1234" />
+                </div>
+                <div>
+                  <label>Ingreso mensual usuario 2</label>
+                  <input type="number" id="cfgIngreso2" min="0" step="0.01" />
+                </div>
+                <div>
+                  <label>Ingreso conjunto mensual</label>
+                  <input type="number" id="cfgIngresoConjunto" min="0" step="0.01" />
+                </div>
+                <div>
+                  <label>% ahorro común</label>
+                  <input type="number" id="cfgAhorroComun" min="0" max="100" step="1" />
+                </div>
+                <div>
+                  <label>Ahorro individual usuario 1</label>
+                  <input type="number" id="cfgAhorro1" min="0" step="0.01" />
+                </div>
+                <div>
+                  <label>Ahorro individual usuario 2</label>
+                  <input type="number" id="cfgAhorro2" min="0" step="0.01" />
+                </div>
+              </div>
+              <button type="submit">Guardar configuración</button>
+            </form>
           </div>
-          <div>
-            <label>Tipo</label>
-            <select id="movTipo" required>
-              <option value="Ingreso">Ingreso</option>
-              <option value="Gasto">Gasto</option>
-            </select>
-          </div>
-          <div>
-            <label>Responsable / quién pagó</label>
-            <select id="movPersona" required></select>
-          </div>
-          <div>
-            <label>Alcance</label>
-            <select id="movAlcance" required>
-              <option value="Compartido">Compartido</option>
-              <option value="Personal">Personal</option>
-            </select>
-          </div>
-          <div>
-            <label>Categoría</label>
-            <select id="movCategoria" required></select>
-          </div>
-          <div>
-            <label>Medio de pago</label>
-            <select id="movMedio" required>
-              <option>Efectivo</option>
-              <option>Yape</option>
-              <option>Plin</option>
-              <option>Tarjeta</option>
-              <option>Transferencia</option>
-              <option>Otro</option>
-            </select>
-          </div>
-          <div>
-            <label>Monto</label>
-            <input type="number" id="movMonto" min="0" step="0.01" placeholder="0.00" required />
-          </div>
-          <div>
-            <label>Descripción</label>
-            <input type="text" id="movDescripcion" placeholder="Ej. mercado, alquiler, sueldo" required />
-          </div>
-          <button type="submit" id="btnSaveMov">Guardar movimiento</button>
-          <button type="button" class="light" id="btnCancelMov">Cancelar edición</button>
-        </form>
 
-        <br />
-        <h3>Movimientos del periodo</h3>
-        <table>
-          <thead>
-            <tr><th>Fecha</th><th>Tipo</th><th>Persona</th><th>Alcance</th><th>Categoría</th><th>Medio</th><th>Monto</th><th>Descripción</th><th>Acciones</th></tr>
-          </thead>
-          <tbody id="tablaMovimientos"></tbody>
-        </table>
-      </div>
+          <div class="card">
+            <div class="section-title"><h2>Categorías</h2></div>
+            <form id="categoryForm" class="form-one">
+              <div class="form-wide">
+                <div>
+                  <label>Nombre</label>
+                  <input type="text" id="catName" placeholder="Ej. Comida" required />
+                </div>
+                <div>
+                  <label>Tipo</label>
+                  <select id="catType">
+                    <option value="Compartida">Compartida</option>
+                    <option value="Personal">Personal</option>
+                  </select>
+                </div>
+                <div>
+                  <label>Responsable</label>
+                  <select id="catPerson"></select>
+                </div>
+                <div>
+                  <label>Presupuesto mensual</label>
+                  <input type="number" id="catBudget" min="0" step="0.01" placeholder="0.00" required />
+                </div>
+              </div>
+              <button type="submit">Agregar categoría</button>
+            </form>
+            <br />
+            <div id="categoryList" class="category-list"></div>
+          </div>
+        </div>
+      </section>
+    </main>
 
-      <div id="tab-categorias" class="tab">
-        <h2 id="catFormTitle">Categorías y presupuestos</h2>
-        <form id="formCategoria" class="form-grid">
-          <input type="hidden" id="catId" />
-          <div>
-            <label>Nombre de categoría</label>
-            <input type="text" id="catNombre" placeholder="Ej. Alquiler, comida, salidas" required />
-          </div>
-          <div>
-            <label>Tipo</label>
-            <select id="catTipo" required>
-              <option value="Compartida">Compartida</option>
-              <option value="Personal">Personal</option>
-            </select>
-          </div>
-          <div>
-            <label>Responsable</label>
-            <select id="catPersona" required></select>
-          </div>
-          <div>
-            <label>Presupuesto mensual</label>
-            <input type="number" id="catPresupuesto" min="0" step="0.01" placeholder="0.00" required />
-          </div>
-          <button type="submit" id="btnSaveCat">Guardar categoría</button>
-          <button type="button" class="light" id="btnCancelCat">Cancelar edición</button>
-        </form>
-        <br />
-        <table>
-          <thead><tr><th>Categoría</th><th>Tipo</th><th>Responsable</th><th>Presupuesto</th><th>Acciones</th></tr></thead>
-          <tbody id="tablaCategorias"></tbody>
-        </table>
-      </div>
-
-      <div id="tab-configuracion" class="tab">
-        <h2>Configuración de pareja</h2>
-        <form id="formConfig" class="form-grid">
-          <div>
-            <label>Miembro 1</label>
-            <input type="text" id="cfgPersona1" placeholder="Nombre" required />
-          </div>
-          <div>
-            <label>Ingreso mensual miembro 1</label>
-            <input type="number" id="cfgIngreso1" min="0" step="0.01" required />
-          </div>
-          <div>
-            <label>Miembro 2</label>
-            <input type="text" id="cfgPersona2" placeholder="Nombre" required />
-          </div>
-          <div>
-            <label>Ingreso mensual miembro 2</label>
-            <input type="number" id="cfgIngreso2" min="0" step="0.01" required />
-          </div>
-          <div>
-            <label>Ingreso conjunto mensual</label>
-            <input type="number" id="cfgIngresoConjunto" min="0" step="0.01" value="0" />
-          </div>
-          <div>
-            <label>% ahorro común</label>
-            <input type="number" id="cfgAhorroComun" min="0" max="100" step="1" value="10" />
-          </div>
-          <div>
-            <label>Ahorro individual miembro 1</label>
-            <input type="number" id="cfgAhorro1" min="0" step="0.01" value="0" />
-          </div>
-          <div>
-            <label>Ahorro individual miembro 2</label>
-            <input type="number" id="cfgAhorro2" min="0" step="0.01" value="0" />
-          </div>
-          <div>
-            <label>PIN local opcional</label>
-            <input type="password" id="cfgPin" placeholder="Déjalo vacío si no quieres bloqueo" />
-          </div>
-          <button type="submit">Guardar configuración</button>
-        </form>
-        <p class="small">El PIN local es una protección básica visual. Para seguridad real se debe implementar autenticación con usuarios y permisos.</p>
-      </div>
-    </section>
-  </main>
+    <nav class="bottom-nav no-print">
+      <button class="nav-btn active" data-view="home">Registrar</button>
+      <button class="nav-btn" data-view="stats">Estadísticas</button>
+      <button class="nav-btn" data-view="config">Configurar</button>
+    </nav>
+  </section>
 
   <script>
-    const API_URL = "https://script.google.com/macros/s/AKfycbzPXVdViDEc5kxMVQRYBiUg4_EVmFNAkI0wwoT597UPm2ESJa42NU7yvKVKVPyH7e7k/exec";
+    const API_URL = "https://script.google.com/macros/s/AKfycbz8lkq7P2HI0J7HLJYJI0PGBG1oMMTfD4LcMrR6I5hvbrDn6U4c_hFZys5d8bmblfNI/exec";
 
     const state = {
+      currentUser: null,
+      statsPeriod: "month",
       config: {
         persona1: "Persona 1",
         persona2: "Persona 2",
+        password1: "",
+        password2: "",
         ingreso1: 0,
         ingreso2: 0,
         ingresoConjunto: 0,
         ahorroComunPct: 10,
         ahorro1: 0,
-        ahorro2: 0,
-        pin: ""
+        ahorro2: 0
       },
       categorias: [],
-      movimientos: [],
-      filter: {
-        period: "month",
-        start: "",
-        end: ""
-      }
+      movimientos: []
     };
 
     const COLORS = ["#2563eb", "#16a34a", "#d97706", "#dc2626", "#7c3aed", "#0891b2", "#db2777", "#65a30d"];
 
     const $ = (id) => document.getElementById(id);
     const money = (n) => `S/ ${Number(n || 0).toFixed(2)}`;
-    const todayISO = () => new Date().toISOString().slice(0, 10);
     const toNumber = (v) => Number(v || 0);
     const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+    const todayISO = () => {
+      const d = new Date();
+      d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
+      return d.toISOString().slice(0, 10);
+    };
 
     function showStatus(message, type = "ok") {
       const box = $("globalStatus");
       box.textContent = message;
       box.className = `status show ${type}`;
-      setTimeout(() => { box.className = "status"; }, 3500);
+      setTimeout(() => box.className = "status", 3000);
     }
 
-    function getPersonas(includeComun = true) {
-      const personas = [state.config.persona1 || "Persona 1", state.config.persona2 || "Persona 2"];
-      return includeComun ? ["Común", ...personas] : personas;
+    function showLoginStatus(message, type = "error") {
+      const box = $("loginStatus");
+      box.textContent = message;
+      box.className = `status show ${type}`;
+    }
+
+    function getUsers() {
+      return [
+        { key: "persona1", passwordKey: "password1", name: state.config.persona1 || "Persona 1" },
+        { key: "persona2", passwordKey: "password2", name: state.config.persona2 || "Persona 2" }
+      ];
     }
 
     function fillSelect(select, values) {
@@ -662,256 +803,251 @@
       if (values.includes(current)) select.value = current;
     }
 
-    function refreshSelectors() {
-      fillSelect($("movPersona"), getPersonas(true));
-      fillSelect($("catPersona"), getPersonas(true));
-      const categoriaNombres = state.categorias.length ? state.categorias.map(c => c.nombre) : ["General"];
-      fillSelect($("movCategoria"), categoriaNombres);
+    function refreshLoginUsers() {
+      const select = $("loginUser");
+      select.innerHTML = "";
+      getUsers().forEach(user => {
+        const opt = document.createElement("option");
+        opt.value = user.key;
+        opt.textContent = user.name;
+        select.appendChild(opt);
+      });
+    }
+
+    function refreshFormOptions() {
+      const people = ["Común", state.config.persona1 || "Persona 1", state.config.persona2 || "Persona 2"];
+      const cats = state.categorias.length ? state.categorias.map(c => c.nombre) : ["General"];
+      fillSelect($("quickCategory"), cats);
+      fillSelect($("catPerson"), people);
     }
 
     function applyConfigToForm() {
-      $("cfgPersona1").value = state.config.persona1 || "";
-      $("cfgPersona2").value = state.config.persona2 || "";
+      $("cfgPersona1").value = state.config.persona1 || "Persona 1";
+      $("cfgPersona2").value = state.config.persona2 || "Persona 2";
+      $("cfgPassword1").value = state.config.password1 || "";
+      $("cfgPassword2").value = state.config.password2 || "";
       $("cfgIngreso1").value = state.config.ingreso1 || 0;
       $("cfgIngreso2").value = state.config.ingreso2 || 0;
       $("cfgIngresoConjunto").value = state.config.ingresoConjunto || 0;
       $("cfgAhorroComun").value = state.config.ahorroComunPct || 0;
       $("cfgAhorro1").value = state.config.ahorro1 || 0;
       $("cfgAhorro2").value = state.config.ahorro2 || 0;
-      $("cfgPin").value = state.config.pin || "";
     }
 
-    function setPeriodDates() {
-      const period = $("filterPeriod").value;
+    function getDateRange(period) {
+      const today = todayISO();
       const now = new Date();
-      const y = now.getFullYear();
-      const m = now.getMonth();
       let start = "";
-      let end = "";
+      let end = today;
 
-      if (period === "today") {
-        start = todayISO();
-        end = todayISO();
-      }
-
+      if (period === "today") start = today;
       if (period === "week") {
-        const day = now.getDay() || 7;
-        const monday = new Date(now);
-        monday.setDate(now.getDate() - day + 1);
-        start = monday.toISOString().slice(0, 10);
-        end = todayISO();
+        const d = new Date();
+        const day = d.getDay() || 7;
+        d.setDate(d.getDate() - day + 1);
+        d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
+        start = d.toISOString().slice(0, 10);
       }
-
       if (period === "month") {
-        start = new Date(y, m, 1).toISOString().slice(0, 10);
-        end = todayISO();
+        const d = new Date(now.getFullYear(), now.getMonth(), 1);
+        d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
+        start = d.toISOString().slice(0, 10);
       }
-
       if (period === "all") {
         start = "";
         end = "";
       }
-
-      if (period !== "custom") {
-        $("filterStart").value = start;
-        $("filterEnd").value = end;
-      }
+      return { start, end };
     }
 
-    function applyFilter() {
-      state.filter.period = $("filterPeriod").value;
-      state.filter.start = $("filterStart").value;
-      state.filter.end = $("filterEnd").value;
-      saveLocal();
-      renderAll();
-    }
-
-    function getFilteredMovimientos() {
-      const start = state.filter.start;
-      const end = state.filter.end;
+    function getMovements(period = state.statsPeriod) {
+      const { start, end } = getDateRange(period);
       return state.movimientos.filter(m => {
-        if (!m.fecha) return true;
+        if (!m.fecha) return false;
         if (start && m.fecha < start) return false;
         if (end && m.fecha > end) return false;
         return true;
       });
     }
 
-    function getResumen() {
-      const movimientos = getFilteredMovimientos();
-      const ingresosRegistrados = movimientos
-        .filter(m => m.tipo === "Ingreso")
+    function sumMovs(items, type, person = null) {
+      return items
+        .filter(m => m.tipo === type && (!person || m.persona === person))
         .reduce((s, m) => s + toNumber(m.monto), 0);
-
-      const gastosRegistrados = movimientos
-        .filter(m => m.tipo === "Gasto")
-        .reduce((s, m) => s + toNumber(m.monto), 0);
-
-      const ingresosConfig = toNumber(state.config.ingreso1) + toNumber(state.config.ingreso2) + toNumber(state.config.ingresoConjunto);
-      const ingresosBase = ingresosRegistrados > 0 ? ingresosRegistrados : ingresosConfig;
-      const ahorroComun = ingresosBase * (toNumber(state.config.ahorroComunPct) / 100);
-      const ahorroIndividual = toNumber(state.config.ahorro1) + toNumber(state.config.ahorro2);
-      const ahorroSugerido = ahorroComun + ahorroIndividual;
-      const saldo = ingresosBase - gastosRegistrados - ahorroSugerido;
-
-      return { ingresosBase, gastosRegistrados, ahorroSugerido, saldo };
     }
 
-    function groupSum(items, keyGetter, filterFn) {
+    function groupSum(items, keyGetter) {
       const map = {};
-      items.filter(filterFn || (() => true)).forEach(item => {
+      items.forEach(item => {
         const key = keyGetter(item) || "Sin clasificar";
         map[key] = (map[key] || 0) + toNumber(item.monto);
       });
       return map;
     }
 
-    function renderResumen() {
-      const r = getResumen();
-      $("mIngresos").textContent = money(r.ingresosBase);
-      $("mGastos").textContent = money(r.gastosRegistrados);
-      $("mAhorro").textContent = money(r.ahorroSugerido);
-      $("mSaldo").textContent = money(r.saldo);
+    function renderHome() {
+      const todayMovs = getMovements("today");
+      const monthMovs = getMovements("month");
+      const userName = state.currentUser?.name || "";
 
-      renderTablaCategoriasResumen();
-      renderTablaPersonasResumen();
-      renderCharts();
-    }
+      const todayExpenses = sumMovs(todayMovs, "Gasto");
+      const userTodayExpenses = sumMovs(todayMovs, "Gasto", userName);
+      const monthExpenses = sumMovs(monthMovs, "Gasto");
 
-    function renderTablaCategoriasResumen() {
-      const tbody = $("tablaCategoriasResumen");
-      tbody.innerHTML = "";
-      const movimientos = getFilteredMovimientos();
+      $("homeTodayTotal").textContent = money(todayExpenses);
+      $("homeUserToday").textContent = money(userTodayExpenses);
+      $("homeMonthTotal").textContent = money(monthExpenses);
+      $("todayLabel").textContent = todayISO();
 
-      if (!state.categorias.length) {
-        tbody.innerHTML = `<tr><td data-label="Mensaje" colspan="5">Aún no hay categorías registradas.</td></tr>`;
+      const list = $("todayMovements");
+      list.innerHTML = "";
+      const sorted = [...todayMovs].sort((a, b) => String(b.creadoEn || b.fecha).localeCompare(String(a.creadoEn || a.fecha)));
+      $("todayCount").textContent = `${sorted.length} registro${sorted.length === 1 ? "" : "s"}`;
+
+      if (!sorted.length) {
+        list.innerHTML = `<div class="decision-item"><strong>Aún no hay movimientos hoy</strong><span>Registra el primer gasto desde el formulario rápido.</span></div>`;
         return;
       }
 
-      state.categorias.forEach(cat => {
-        const gastado = movimientos
+      sorted.slice(0, 8).forEach(m => {
+        const item = document.createElement("div");
+        const amountClass = m.tipo === "Ingreso" ? "income" : "expense";
+        const sign = m.tipo === "Ingreso" ? "+" : "-";
+        item.className = "movement-item";
+        item.innerHTML = `
+          <div>
+            <strong>${m.descripcion || m.categoria}</strong>
+            <small>${m.persona} · ${m.categoria} · ${m.medio}</small>
+          </div>
+          <div class="amount ${amountClass}">${sign}${money(m.monto)}</div>
+        `;
+        list.appendChild(item);
+      });
+    }
+
+    function renderStats() {
+      const movs = getMovements(state.statsPeriod);
+      const gastos = movs.filter(m => m.tipo === "Gasto");
+      const ingresos = sumMovs(movs, "Ingreso");
+      const gastosTotal = sumMovs(movs, "Gasto");
+      const ingresoBase = ingresos > 0 ? ingresos : toNumber(state.config.ingreso1) + toNumber(state.config.ingreso2) + toNumber(state.config.ingresoConjunto);
+      const ahorro = ingresoBase * (toNumber(state.config.ahorroComunPct) / 100) + toNumber(state.config.ahorro1) + toNumber(state.config.ahorro2);
+      const saldo = ingresoBase - gastosTotal - ahorro;
+
+      $("statsIngresos").textContent = money(ingresoBase);
+      $("statsGastos").textContent = money(gastosTotal);
+      $("statsSaldo").textContent = money(saldo);
+
+      const byCat = groupSum(gastos, m => m.categoria);
+      const byPerson = groupSum(gastos, m => m.persona);
+      drawDoughnut($("chartCategorias"), byCat);
+      drawBars($("chartPersonas"), byPerson);
+      renderDecisionList(byCat, gastosTotal, saldo);
+      renderBudgetList(movs);
+    }
+
+    function renderDecisionList(byCat, gastosTotal, saldo) {
+      const box = $("decisionList");
+      box.innerHTML = "";
+      const entries = Object.entries(byCat).sort((a, b) => b[1] - a[1]);
+      const topCat = entries[0];
+      const alerts = getBudgetAlerts(getMovements(state.statsPeriod));
+
+      const data = [
+        {
+          title: topCat ? `Mayor gasto: ${topCat[0]}` : "Sin gastos registrados",
+          text: topCat ? `${money(topCat[1])} acumulado en el periodo.` : "Registra gastos para ver la categoría principal."
+        },
+        {
+          title: alerts.length ? `${alerts.length} categoría(s) en alerta` : "Presupuestos controlados",
+          text: alerts.length ? alerts.map(a => `${a.nombre} (${a.uso.toFixed(0)}%)`).join(", ") : "Ninguna categoría supera el 90% del presupuesto."
+        },
+        {
+          title: saldo >= 0 ? "Saldo positivo" : "Saldo negativo",
+          text: saldo >= 0 ? `Aún queda ${money(saldo)} después del ahorro sugerido.` : `Falta ${money(Math.abs(saldo))} para cubrir gastos y ahorro sugerido.`
+        }
+      ];
+
+      data.forEach(d => {
+        const div = document.createElement("div");
+        div.className = "decision-item";
+        div.innerHTML = `<strong>${d.title}</strong><span>${d.text}</span>`;
+        box.appendChild(div);
+      });
+    }
+
+    function getBudgetAlerts(movs) {
+      return state.categorias.map(cat => {
+        const gastado = movs
           .filter(m => m.tipo === "Gasto" && m.categoria === cat.nombre)
           .reduce((s, m) => s + toNumber(m.monto), 0);
         const presupuesto = toNumber(cat.presupuesto);
         const uso = presupuesto > 0 ? (gastado / presupuesto) * 100 : 0;
-        const estado = uso >= 100 ? "Excedido" : uso >= 90 ? "Cerca del límite" : "Dentro";
-        const badgeClass = uso >= 100 ? "danger" : uso >= 90 ? "warn" : "ok";
-        const barClass = uso >= 100 ? "danger" : uso >= 90 ? "warn" : "";
-
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-          <td data-label="Categoría">${cat.nombre}</td>
-          <td data-label="Gastado">${money(gastado)}</td>
-          <td data-label="Presupuesto">${money(presupuesto)}</td>
-          <td data-label="Uso">
-            <div class="progress-wrap"><div class="progress-bar ${barClass}" style="width:${Math.min(uso, 100)}%"></div></div>
-            <span class="small">${uso.toFixed(1)}%</span>
-          </td>
-          <td data-label="Estado"><span class="badge ${badgeClass}">${estado}</span></td>
-        `;
-        tbody.appendChild(tr);
-      });
+        return { ...cat, gastado, uso };
+      }).filter(x => x.uso >= 90);
     }
 
-    function renderTablaPersonasResumen() {
-      const tbody = $("tablaPersonasResumen");
-      tbody.innerHTML = "";
-      const movimientos = getFilteredMovimientos();
-
-      const personas = [
-        { nombre: state.config.persona1 || "Persona 1", ingreso: toNumber(state.config.ingreso1) },
-        { nombre: state.config.persona2 || "Persona 2", ingreso: toNumber(state.config.ingreso2) },
-        { nombre: "Común", ingreso: toNumber(state.config.ingresoConjunto) }
-      ];
-
-      personas.forEach(p => {
-        const ingresosMov = movimientos
-          .filter(m => m.tipo === "Ingreso" && m.persona === p.nombre)
-          .reduce((s, m) => s + toNumber(m.monto), 0);
-        const ingresos = ingresosMov > 0 ? ingresosMov : p.ingreso;
-        const gastos = movimientos
-          .filter(m => m.tipo === "Gasto" && m.persona === p.nombre)
-          .reduce((s, m) => s + toNumber(m.monto), 0);
-        const saldo = ingresos - gastos;
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-          <td data-label="Persona">${p.nombre}</td>
-          <td data-label="Ingresos">${money(ingresos)}</td>
-          <td data-label="Gastos">${money(gastos)}</td>
-          <td data-label="Saldo">${money(saldo)}</td>
-        `;
-        tbody.appendChild(tr);
-      });
-    }
-
-    function renderMovimientos() {
-      const tbody = $("tablaMovimientos");
-      tbody.innerHTML = "";
-      const data = [...getFilteredMovimientos()].sort((a, b) => String(b.fecha).localeCompare(String(a.fecha))).slice(0, 100);
-
-      if (!data.length) {
-        tbody.innerHTML = `<tr><td data-label="Mensaje" colspan="9">Aún no hay movimientos en este periodo.</td></tr>`;
-        return;
-      }
-
-      data.forEach(m => {
-        const tipoClass = m.tipo === "Ingreso" ? "ok" : "danger";
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-          <td data-label="Fecha">${m.fecha}</td>
-          <td data-label="Tipo"><span class="badge ${tipoClass}">${m.tipo}</span></td>
-          <td data-label="Persona">${m.persona}</td>
-          <td data-label="Alcance">${m.alcance}</td>
-          <td data-label="Categoría">${m.categoria}</td>
-          <td data-label="Medio">${m.medio}</td>
-          <td data-label="Monto">${money(m.monto)}</td>
-          <td data-label="Descripción">${m.descripcion}</td>
-          <td data-label="Acciones">
-            <div class="actions">
-              <button class="light" onclick="editMovimiento('${m.id}')">Editar</button>
-              <button class="danger" onclick="deleteMovimiento('${m.id}')">Eliminar</button>
-            </div>
-          </td>
-        `;
-        tbody.appendChild(tr);
-      });
-    }
-
-    function renderCategorias() {
-      const tbody = $("tablaCategorias");
-      tbody.innerHTML = "";
+    function renderBudgetList(movs) {
+      const box = $("budgetList");
+      box.innerHTML = "";
 
       if (!state.categorias.length) {
-        tbody.innerHTML = `<tr><td data-label="Mensaje" colspan="5">Aún no hay categorías registradas.</td></tr>`;
+        box.innerHTML = `<div class="decision-item"><strong>Sin categorías</strong><span>Agrega categorías para controlar presupuestos.</span></div>`;
         return;
       }
 
-      state.categorias.forEach(c => {
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-          <td data-label="Categoría">${c.nombre}</td>
-          <td data-label="Tipo"><span class="badge info">${c.tipo}</span></td>
-          <td data-label="Responsable">${c.persona}</td>
-          <td data-label="Presupuesto">${money(c.presupuesto)}</td>
-          <td data-label="Acciones">
-            <div class="actions">
-              <button class="light" onclick="editCategoria('${c.id}')">Editar</button>
-              <button class="danger" onclick="deleteCategoria('${c.id}')">Eliminar</button>
-            </div>
-          </td>
+      state.categorias.forEach(cat => {
+        const gastado = movs
+          .filter(m => m.tipo === "Gasto" && m.categoria === cat.nombre)
+          .reduce((s, m) => s + toNumber(m.monto), 0);
+        const presupuesto = toNumber(cat.presupuesto);
+        const uso = presupuesto > 0 ? (gastado / presupuesto) * 100 : 0;
+        const barClass = uso >= 100 ? "danger" : uso >= 90 ? "warn" : "";
+        const row = document.createElement("div");
+        row.className = "budget-row";
+        row.innerHTML = `
+          <div class="budget-head">
+            <strong>${cat.nombre}</strong>
+            <span>${uso.toFixed(0)}%</span>
+          </div>
+          <div class="progress"><div class="bar ${barClass}" style="width:${Math.min(uso, 100)}%"></div></div>
+          <small>${money(gastado)} de ${money(presupuesto)}</small>
         `;
-        tbody.appendChild(tr);
+        box.appendChild(row);
+      });
+    }
+
+    function renderCategories() {
+      const box = $("categoryList");
+      box.innerHTML = "";
+      if (!state.categorias.length) {
+        box.innerHTML = `<div class="decision-item"><strong>No hay categorías</strong><span>Agrega una categoría para empezar.</span></div>`;
+        return;
+      }
+      state.categorias.forEach(c => {
+        const div = document.createElement("div");
+        div.className = "category-item";
+        div.innerHTML = `
+          <div>
+            <strong>${c.nombre}</strong>
+            <small>${c.tipo} · ${c.persona}</small>
+          </div>
+          <strong>${money(c.presupuesto)}</strong>
+        `;
+        box.appendChild(div);
       });
     }
 
     function setupCanvas(canvas) {
       const rect = canvas.getBoundingClientRect();
       const dpr = window.devicePixelRatio || 1;
-      canvas.width = Math.max(320, rect.width) * dpr;
-      canvas.height = 260 * dpr;
+      const width = Math.max(300, rect.width || 300);
+      const height = 220;
+      canvas.width = width * dpr;
+      canvas.height = height * dpr;
       const ctx = canvas.getContext("2d");
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      return { ctx, width: Math.max(320, rect.width), height: 260 };
+      return { ctx, width, height };
     }
 
     function drawEmpty(ctx, width, height, text) {
@@ -925,16 +1061,17 @@
     function drawDoughnut(canvas, map) {
       const { ctx, width, height } = setupCanvas(canvas);
       ctx.clearRect(0, 0, width, height);
-      const entries = Object.entries(map).filter(([,v]) => v > 0);
-      const total = entries.reduce((s, [,v]) => s + v, 0);
+      const entries = Object.entries(map).filter(([, v]) => v > 0).sort((a, b) => b[1] - a[1]).slice(0, 6);
+      const total = entries.reduce((s, [, v]) => s + v, 0);
       if (!total) return drawEmpty(ctx, width, height, "Sin gastos para graficar");
 
-      const cx = width * 0.32;
-      const cy = height * 0.5;
-      const r = 78;
+      const isSmall = width < 390;
+      const cx = isSmall ? width / 2 : width * 0.3;
+      const cy = isSmall ? 82 : height * 0.5;
+      const r = isSmall ? 58 : 70;
       let start = -Math.PI / 2;
 
-      entries.forEach(([label, value], i) => {
+      entries.forEach(([, value], i) => {
         const angle = (value / total) * Math.PI * 2;
         ctx.beginPath();
         ctx.moveTo(cx, cy);
@@ -946,189 +1083,109 @@
       });
 
       ctx.beginPath();
-      ctx.arc(cx, cy, 42, 0, Math.PI * 2);
+      ctx.arc(cx, cy, r * 0.55, 0, Math.PI * 2);
       ctx.fillStyle = "#fff";
       ctx.fill();
-
       ctx.fillStyle = "#111827";
-      ctx.font = "bold 14px Arial";
+      ctx.font = "bold 13px Arial";
       ctx.textAlign = "center";
       ctx.fillText(money(total), cx, cy + 4);
 
       ctx.textAlign = "left";
       ctx.font = "12px Arial";
-      entries.slice(0, 8).forEach(([label, value], i) => {
-        const y = 32 + i * 25;
+      const legendX = isSmall ? 14 : width * 0.56;
+      const legendY = isSmall ? 158 : 34;
+      entries.forEach(([label, value], i) => {
+        const y = legendY + i * 18;
         ctx.fillStyle = COLORS[i % COLORS.length];
-        ctx.fillRect(width * 0.58, y - 9, 12, 12);
+        ctx.fillRect(legendX, y - 9, 10, 10);
         ctx.fillStyle = "#334155";
-        ctx.fillText(`${label}: ${money(value)}`, width * 0.58 + 18, y);
+        ctx.fillText(`${label.slice(0, 16)}: ${money(value)}`, legendX + 16, y);
       });
     }
 
     function drawBars(canvas, map) {
       const { ctx, width, height } = setupCanvas(canvas);
       ctx.clearRect(0, 0, width, height);
-      const entries = Object.entries(map).filter(([,v]) => v > 0);
-      const max = Math.max(...entries.map(([,v]) => v), 0);
+      const entries = Object.entries(map).filter(([, v]) => v > 0).sort((a, b) => b[1] - a[1]).slice(0, 5);
+      const max = Math.max(...entries.map(([, v]) => v), 0);
       if (!max) return drawEmpty(ctx, width, height, "Sin datos para graficar");
 
-      const padding = 38;
-      const barArea = width - padding * 2;
-      const barWidth = Math.max(28, barArea / entries.length - 18);
-
-      ctx.strokeStyle = "#e5e7eb";
-      ctx.beginPath();
-      ctx.moveTo(padding, height - 42);
-      ctx.lineTo(width - 12, height - 42);
-      ctx.stroke();
-
       entries.forEach(([label, value], i) => {
-        const x = padding + i * (barWidth + 18);
-        const h = (value / max) * 150;
-        const y = height - 42 - h;
-        ctx.fillStyle = COLORS[i % COLORS.length];
-        ctx.fillRect(x, y, barWidth, h);
-        ctx.fillStyle = "#111827";
-        ctx.font = "12px Arial";
-        ctx.textAlign = "center";
-        ctx.fillText(money(value), x + barWidth / 2, y - 6);
-        ctx.fillStyle = "#475569";
-        ctx.fillText(label.slice(0, 14), x + barWidth / 2, height - 20);
-      });
-    }
-
-    function drawHorizontalBars(canvas, map) {
-      const { ctx, width, height } = setupCanvas(canvas);
-      ctx.clearRect(0, 0, width, height);
-      const entries = Object.entries(map).filter(([,v]) => v > 0).sort((a,b) => b[1] - a[1]).slice(0, 7);
-      const max = Math.max(...entries.map(([,v]) => v), 0);
-      if (!max) return drawEmpty(ctx, width, height, "Sin medios de pago registrados");
-
-      entries.forEach(([label, value], i) => {
-        const y = 28 + i * 31;
-        const w = (value / max) * (width - 165);
+        const y = 28 + i * 35;
+        const w = (value / max) * (width - 155);
         ctx.fillStyle = "#475569";
         ctx.font = "12px Arial";
         ctx.textAlign = "left";
-        ctx.fillText(label, 12, y + 10);
+        ctx.fillText(label.slice(0, 14), 12, y + 12);
         ctx.fillStyle = COLORS[i % COLORS.length];
-        ctx.fillRect(112, y, w, 18);
+        ctx.fillRect(105, y, Math.max(w, 4), 19);
         ctx.fillStyle = "#111827";
-        ctx.fillText(money(value), 118 + w, y + 13);
+        ctx.fillText(money(value), 112 + w, y + 14);
       });
-    }
-
-    function drawLineChart(canvas, movimientos) {
-      const { ctx, width, height } = setupCanvas(canvas);
-      ctx.clearRect(0, 0, width, height);
-      const byDate = {};
-
-      movimientos.forEach(m => {
-        if (!m.fecha) return;
-        if (!byDate[m.fecha]) byDate[m.fecha] = { ingreso: 0, gasto: 0 };
-        if (m.tipo === "Ingreso") byDate[m.fecha].ingreso += toNumber(m.monto);
-        if (m.tipo === "Gasto") byDate[m.fecha].gasto += toNumber(m.monto);
-      });
-
-      const dates = Object.keys(byDate).sort();
-      if (!dates.length) return drawEmpty(ctx, width, height, "Sin movimientos para graficar");
-
-      const max = Math.max(...dates.flatMap(d => [byDate[d].ingreso, byDate[d].gasto]), 1);
-      const left = 42, right = 15, top = 22, bottom = 42;
-      const chartW = width - left - right;
-      const chartH = height - top - bottom;
-      const xFor = i => left + (dates.length === 1 ? chartW / 2 : (i / (dates.length - 1)) * chartW);
-      const yFor = v => top + chartH - (v / max) * chartH;
-
-      ctx.strokeStyle = "#e5e7eb";
-      ctx.beginPath();
-      ctx.moveTo(left, top);
-      ctx.lineTo(left, top + chartH);
-      ctx.lineTo(left + chartW, top + chartH);
-      ctx.stroke();
-
-      function line(type, color) {
-        ctx.beginPath();
-        dates.forEach((d, i) => {
-          const x = xFor(i);
-          const y = yFor(byDate[d][type]);
-          if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
-        });
-        ctx.strokeStyle = color;
-        ctx.lineWidth = 2;
-        ctx.stroke();
-        dates.forEach((d, i) => {
-          const x = xFor(i);
-          const y = yFor(byDate[d][type]);
-          ctx.beginPath();
-          ctx.arc(x, y, 3, 0, Math.PI * 2);
-          ctx.fillStyle = color;
-          ctx.fill();
-        });
-      }
-
-      line("ingreso", "#16a34a");
-      line("gasto", "#dc2626");
-
-      ctx.font = "12px Arial";
-      ctx.fillStyle = "#16a34a";
-      ctx.fillText("Ingresos", left, 14);
-      ctx.fillStyle = "#dc2626";
-      ctx.fillText("Gastos", left + 75, 14);
-      ctx.fillStyle = "#475569";
-      ctx.textAlign = "center";
-      const sample = dates.filter((_, i) => i % Math.ceil(dates.length / 5) === 0);
-      sample.forEach(d => {
-        const i = dates.indexOf(d);
-        ctx.fillText(d.slice(5), xFor(i), height - 18);
-      });
-    }
-
-    function renderCharts() {
-      const movimientos = getFilteredMovimientos();
-      const gastos = movimientos.filter(m => m.tipo === "Gasto");
-      const gastosPorCategoria = groupSum(gastos, m => m.categoria);
-      const gastosPorPersona = groupSum(gastos, m => m.persona);
-      const gastosPorMedio = groupSum(gastos, m => m.medio);
-
-      drawDoughnut($("chartCategorias"), gastosPorCategoria);
-      drawBars($("chartPersonas"), gastosPorPersona);
-      drawLineChart($("chartLinea"), movimientos);
-      drawHorizontalBars($("chartMedios"), gastosPorMedio);
     }
 
     function renderAll() {
-      refreshSelectors();
+      refreshLoginUsers();
+      refreshFormOptions();
       applyConfigToForm();
-      renderResumen();
-      renderMovimientos();
-      renderCategorias();
-      checkLock();
+      renderHome();
+      renderStats();
+      renderCategories();
+    }
+
+    function saveLocal() {
+      localStorage.setItem("couple-expense-state", JSON.stringify({
+        config: state.config,
+        categorias: state.categorias,
+        movimientos: state.movimientos,
+        statsPeriod: state.statsPeriod
+      }));
+    }
+
+    function loadLocal() {
+      const raw = localStorage.getItem("couple-expense-state") || localStorage.getItem("pareja-control-data-v2");
+      if (!raw) return;
+      const data = JSON.parse(raw);
+      state.config = { ...state.config, ...(data.config || {}) };
+      state.categorias = data.categorias || [];
+      state.movimientos = data.movimientos || [];
+      state.statsPeriod = data.statsPeriod || "month";
+      $("statsPeriod").value = state.statsPeriod;
+    }
+
+    function seedIfEmpty() {
+      if (!state.categorias.length) {
+        state.categorias = [
+          { id: uid(), nombre: "Comida", tipo: "Compartida", persona: "Común", presupuesto: 800 },
+          { id: uid(), nombre: "Transporte", tipo: "Personal", persona: state.config.persona1 || "Persona 1", presupuesto: 250 },
+          { id: uid(), nombre: "Casa", tipo: "Compartida", persona: "Común", presupuesto: 1200 },
+          { id: uid(), nombre: "Salidas", tipo: "Compartida", persona: "Común", presupuesto: 300 }
+        ];
+        saveLocal();
+      }
     }
 
     function mutateLocal(action, payload) {
-      if (action === "saveConfig") state.config = payload;
+      if (action === "saveConfig") state.config = { ...state.config, ...payload };
       if (action === "addCategoria") state.categorias.push(payload);
-      if (action === "updateCategoria") state.categorias = state.categorias.map(c => c.id === payload.id ? payload : c);
-      if (action === "deleteCategoria") state.categorias = state.categorias.filter(c => c.id !== payload.id);
       if (action === "addMovimiento") state.movimientos.push(payload);
-      if (action === "updateMovimiento") state.movimientos = state.movimientos.map(m => m.id === payload.id ? payload : m);
-      if (action === "deleteMovimiento") state.movimientos = state.movimientos.filter(m => m.id !== payload.id);
     }
 
     async function apiGet() {
       if (!API_URL || API_URL.includes("PEGA_AQUI")) {
         loadLocal();
-        showStatus("Modo local activo: pega tu URL de Apps Script para guardar en Google Sheets.", "error");
+        seedIfEmpty();
+        renderAll();
         return;
       }
       const res = await fetch(API_URL);
       const data = await res.json();
       if (!data.ok) throw new Error(data.message || "No se pudo cargar la información");
-      state.config = data.config || state.config;
+      state.config = { ...state.config, ...(data.config || {}) };
       state.categorias = data.categorias || [];
       state.movimientos = data.movimientos || [];
+      seedIfEmpty();
       saveLocal();
       renderAll();
     }
@@ -1138,7 +1195,7 @@
         mutateLocal(action, payload);
         saveLocal();
         renderAll();
-        showStatus("Guardado en modo local. Para sincronizar usa Apps Script.", "ok");
+        showStatus("Guardado en modo local.", "ok");
         return;
       }
 
@@ -1149,216 +1206,180 @@
       const data = await res.json();
       if (!data.ok) throw new Error(data.message || "No se pudo guardar");
       await apiGet();
-      showStatus("Datos guardados correctamente.", "ok");
+      showStatus("Guardado correctamente.", "ok");
     }
 
-    function saveLocal() {
-      localStorage.setItem("pareja-control-data-v2", JSON.stringify(state));
-    }
+    function login(userKey, password, remember) {
+      const user = getUsers().find(u => u.key === userKey);
+      if (!user) return showLoginStatus("Selecciona un usuario válido.");
 
-    function loadLocal() {
-      const raw = localStorage.getItem("pareja-control-data-v2") || localStorage.getItem("pareja-control-data");
-      if (raw) {
-        const data = JSON.parse(raw);
-        state.config = { ...state.config, ...(data.config || {}) };
-        state.categorias = data.categorias || [];
-        state.movimientos = data.movimientos || [];
-        state.filter = { ...state.filter, ...(data.filter || {}) };
+      const expectedPassword = String(state.config[user.passwordKey] || "").trim();
+      if (expectedPassword && password !== expectedPassword) {
+        return showLoginStatus("Contraseña incorrecta.");
       }
-      $("filterPeriod").value = state.filter.period || "month";
-      $("filterStart").value = state.filter.start || "";
-      $("filterEnd").value = state.filter.end || "";
+
+      state.currentUser = { key: user.key, name: user.name };
+      sessionStorage.setItem("couple-active-user", JSON.stringify(state.currentUser));
+      if (remember) {
+        localStorage.setItem("couple-remember-user", JSON.stringify({ userKey, password }));
+      } else {
+        localStorage.removeItem("couple-remember-user");
+      }
+
+      $("activeUserLabel").textContent = state.currentUser.name;
+      $("loginScreen").style.display = "none";
+      $("appShell").style.display = "block";
       renderAll();
     }
 
-    function seedIfEmpty() {
-      if (!state.categorias.length) {
-        state.categorias = [
-          { id: uid(), nombre: "Alquiler", tipo: "Compartida", persona: "Común", presupuesto: 1200 },
-          { id: uid(), nombre: "Comida", tipo: "Compartida", persona: "Común", presupuesto: 800 },
-          { id: uid(), nombre: "Transporte", tipo: "Personal", persona: state.config.persona1, presupuesto: 250 },
-          { id: uid(), nombre: "Salidas", tipo: "Compartida", persona: "Común", presupuesto: 300 }
-        ];
-        saveLocal();
+    function tryAutoLogin() {
+      const sessionUser = sessionStorage.getItem("couple-active-user");
+      if (sessionUser) {
+        const parsed = JSON.parse(sessionUser);
+        const user = getUsers().find(u => u.key === parsed.key);
+        if (user) {
+          state.currentUser = { key: user.key, name: user.name };
+          $("activeUserLabel").textContent = state.currentUser.name;
+          $("loginScreen").style.display = "none";
+          $("appShell").style.display = "block";
+          renderAll();
+          return;
+        }
+      }
+
+      const remembered = localStorage.getItem("couple-remember-user");
+      if (remembered) {
+        const data = JSON.parse(remembered);
+        $("loginUser").value = data.userKey || "persona1";
+        $("loginPassword").value = data.password || "";
+        $("rememberLogin").checked = true;
       }
     }
 
-    function resetMovimientoForm() {
-      $("movId").value = "";
-      $("movFecha").value = todayISO();
-      $("movTipo").value = "Ingreso";
-      $("movAlcance").value = "Compartido";
-      $("movMonto").value = "";
-      $("movDescripcion").value = "";
-      $("movFormTitle").textContent = "Registrar movimiento";
-      $("btnSaveMov").textContent = "Guardar movimiento";
-    }
-
-    window.editMovimiento = function(id) {
-      const m = state.movimientos.find(x => x.id === id);
-      if (!m) return;
-      $("movId").value = m.id;
-      $("movFecha").value = m.fecha;
-      $("movTipo").value = m.tipo;
-      $("movPersona").value = m.persona;
-      $("movAlcance").value = m.alcance;
-      $("movCategoria").value = m.categoria;
-      $("movMedio").value = m.medio;
-      $("movMonto").value = m.monto;
-      $("movDescripcion").value = m.descripcion;
-      $("movFormTitle").textContent = "Editar movimiento";
-      $("btnSaveMov").textContent = "Actualizar movimiento";
-      document.querySelector('[data-tab="movimientos"]').click();
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    };
-
-    window.deleteMovimiento = async function(id) {
-      if (!confirm("¿Eliminar este movimiento?")) return;
-      try { await apiPost("deleteMovimiento", { id }); }
-      catch (err) { showStatus(err.message, "error"); }
-    };
-
-    function resetCategoriaForm() {
-      $("catId").value = "";
-      $("catNombre").value = "";
-      $("catTipo").value = "Compartida";
-      $("catPresupuesto").value = "";
-      $("catFormTitle").textContent = "Categorías y presupuestos";
-      $("btnSaveCat").textContent = "Guardar categoría";
-    }
-
-    window.editCategoria = function(id) {
-      const c = state.categorias.find(x => x.id === id);
-      if (!c) return;
-      $("catId").value = c.id;
-      $("catNombre").value = c.nombre;
-      $("catTipo").value = c.tipo;
-      $("catPersona").value = c.persona;
-      $("catPresupuesto").value = c.presupuesto;
-      $("catFormTitle").textContent = "Editar categoría";
-      $("btnSaveCat").textContent = "Actualizar categoría";
-    };
-
-    window.deleteCategoria = async function(id) {
-      const c = state.categorias.find(x => x.id === id);
-      if (!c) return;
-      const hasMovements = state.movimientos.some(m => m.categoria === c.nombre);
-      if (hasMovements && !confirm("Esta categoría tiene movimientos. Si la eliminas, esos movimientos conservarán el nombre anterior. ¿Continuar?")) return;
-      if (!hasMovements && !confirm("¿Eliminar esta categoría?")) return;
-      try { await apiPost("deleteCategoria", { id }); }
-      catch (err) { showStatus(err.message, "error"); }
-    };
-
-    function checkLock() {
-      const pin = String(state.config.pin || "").trim();
-      const unlocked = sessionStorage.getItem("pareja-unlocked") === "1";
-      $("lockScreen").style.display = pin && !unlocked ? "flex" : "none";
-    }
-
-    document.querySelectorAll(".tab-btn").forEach(btn => {
+    document.querySelectorAll(".nav-btn").forEach(btn => {
       btn.addEventListener("click", () => {
-        document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
-        document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+        document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("active"));
+        document.querySelectorAll(".view").forEach(v => v.classList.remove("active"));
         btn.classList.add("active");
-        $("tab-" + btn.dataset.tab).classList.add("active");
-        renderCharts();
+        $("view-" + btn.dataset.view).classList.add("active");
+        renderAll();
       });
     });
 
-    $("filterPeriod").addEventListener("change", () => {
-      setPeriodDates();
-      applyFilter();
+    document.querySelectorAll(".segmented button").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".segmented button").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        $("quickType").value = btn.dataset.type;
+        $("btnSaveQuick").textContent = btn.dataset.type === "Ingreso" ? "Guardar ingreso" : "Guardar gasto";
+      });
     });
-    $("btnApplyFilter").addEventListener("click", applyFilter);
 
-    $("formConfig").addEventListener("submit", async (e) => {
+    $("btnLogin").addEventListener("click", () => {
+      login($("loginUser").value, $("loginPassword").value.trim(), $("rememberLogin").checked);
+    });
+
+    $("btnLogout").addEventListener("click", () => {
+      sessionStorage.removeItem("couple-active-user");
+      state.currentUser = null;
+      $("appShell").style.display = "none";
+      $("loginScreen").style.display = "flex";
+    });
+
+    $("quickForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      if (!state.currentUser) return;
+      const type = $("quickType").value;
+      const payload = {
+        id: uid(),
+        fecha: $("quickDate").value || todayISO(),
+        tipo: type,
+        persona: state.currentUser.name,
+        alcance: $("quickScope").value,
+        categoria: $("quickCategory").value,
+        medio: $("quickPayment").value,
+        monto: toNumber($("quickAmount").value),
+        descripcion: $("quickDescription").value.trim(),
+        creadoEn: new Date().toISOString()
+      };
+      if (!payload.monto || payload.monto <= 0) return showStatus("Ingresa un monto mayor a cero.", "error");
+      try {
+        await apiPost("addMovimiento", payload);
+        $("quickAmount").value = "";
+        $("quickDescription").value = "";
+        $("quickDate").value = todayISO();
+        $("quickAmount").focus();
+      } catch (err) {
+        showStatus(err.message, "error");
+      }
+    });
+
+    $("statsPeriod").addEventListener("change", () => {
+      state.statsPeriod = $("statsPeriod").value;
+      saveLocal();
+      renderAll();
+    });
+
+    $("btnReload").addEventListener("click", () => apiGet().catch(err => showStatus(err.message, "error")));
+    $("btnPrint").addEventListener("click", () => window.print());
+    $("btnPrintStats").addEventListener("click", () => window.print());
+
+    $("configForm").addEventListener("submit", async (e) => {
       e.preventDefault();
       const payload = {
         persona1: $("cfgPersona1").value.trim() || "Persona 1",
         persona2: $("cfgPersona2").value.trim() || "Persona 2",
+        password1: $("cfgPassword1").value.trim(),
+        password2: $("cfgPassword2").value.trim(),
         ingreso1: toNumber($("cfgIngreso1").value),
         ingreso2: toNumber($("cfgIngreso2").value),
         ingresoConjunto: toNumber($("cfgIngresoConjunto").value),
         ahorroComunPct: toNumber($("cfgAhorroComun").value),
         ahorro1: toNumber($("cfgAhorro1").value),
-        ahorro2: toNumber($("cfgAhorro2").value),
-        pin: $("cfgPin").value.trim()
+        ahorro2: toNumber($("cfgAhorro2").value)
       };
       try {
         await apiPost("saveConfig", payload);
-        if (!payload.pin) sessionStorage.removeItem("pareja-unlocked");
+        refreshLoginUsers();
+      } catch (err) {
+        showStatus(err.message, "error");
       }
-      catch (err) { showStatus(err.message, "error"); }
     });
 
-    $("formCategoria").addEventListener("submit", async (e) => {
+    $("categoryForm").addEventListener("submit", async (e) => {
       e.preventDefault();
-      const id = $("catId").value || uid();
-      const nombre = $("catNombre").value.trim();
-      const duplicated = state.categorias.some(c => c.id !== id && c.nombre.toLowerCase() === nombre.toLowerCase());
-      if (duplicated) {
-        showStatus("Esa categoría ya existe.", "error");
-        return;
-      }
+      const name = $("catName").value.trim();
+      const exists = state.categorias.some(c => c.nombre.toLowerCase() === name.toLowerCase());
+      if (exists) return showStatus("Esa categoría ya existe.", "error");
       const payload = {
-        id,
-        nombre,
-        tipo: $("catTipo").value,
-        persona: $("catPersona").value,
-        presupuesto: toNumber($("catPresupuesto").value)
+        id: uid(),
+        nombre: name,
+        tipo: $("catType").value,
+        persona: $("catPerson").value,
+        presupuesto: toNumber($("catBudget").value)
       };
       try {
-        await apiPost($("catId").value ? "updateCategoria" : "addCategoria", payload);
-        resetCategoriaForm();
-      } catch (err) { showStatus(err.message, "error"); }
-    });
-
-    $("formMovimiento").addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const id = $("movId").value || uid();
-      const payload = {
-        id,
-        fecha: $("movFecha").value,
-        tipo: $("movTipo").value,
-        persona: $("movPersona").value,
-        alcance: $("movAlcance").value,
-        categoria: $("movCategoria").value,
-        medio: $("movMedio").value,
-        monto: toNumber($("movMonto").value),
-        descripcion: $("movDescripcion").value.trim()
-      };
-      try {
-        await apiPost($("movId").value ? "updateMovimiento" : "addMovimiento", payload);
-        resetMovimientoForm();
-      } catch (err) { showStatus(err.message, "error"); }
-    });
-
-    $("btnCancelMov").addEventListener("click", resetMovimientoForm);
-    $("btnCancelCat").addEventListener("click", resetCategoriaForm);
-    $("btnReloadTop").addEventListener("click", () => apiGet().catch(err => showStatus(err.message, "error")));
-    $("btnPrint").addEventListener("click", () => window.print());
-
-    $("btnUnlock").addEventListener("click", () => {
-      const entered = $("pinInput").value.trim();
-      if (entered === String(state.config.pin || "").trim()) {
-        sessionStorage.setItem("pareja-unlocked", "1");
-        checkLock();
-      } else {
-        alert("PIN incorrecto");
+        await apiPost("addCategoria", payload);
+        $("catName").value = "";
+        $("catBudget").value = "";
+      } catch (err) {
+        showStatus(err.message, "error");
       }
     });
 
-    window.addEventListener("resize", () => renderCharts());
+    window.addEventListener("resize", () => renderAll());
 
-    $("movFecha").value = todayISO();
-    setPeriodDates();
-    applyFilter();
+    $("quickDate").value = todayISO();
     loadLocal();
     seedIfEmpty();
-    apiGet().catch(() => {
-      loadLocal();
-      showStatus("No se pudo conectar con Google Sheets. Se mantiene modo local.", "error");
-    });
+    renderAll();
+    apiGet()
+      .then(() => tryAutoLogin())
+      .catch(() => {
+        renderAll();
+        tryAutoLogin();
+        showLoginStatus("No se pudo conectar con Google Sheets. Se usará la última información local.", "error");
+      });
   </script>
 </body>
 </html>
