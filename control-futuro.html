@@ -19,20 +19,27 @@
       --soft: #f8fafc;
       --dark: #0f172a;
     }
+* {
+  box-sizing: border-box;
+  overflow-wrap: anywhere;
+}
 
-    * { box-sizing: border-box; }
+html {
+  font-size: 14px;
+}
 
-    body {
-      margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-    }
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  overflow-x: hidden;
+}
 
     button, input, select {
-      font-family: inherit;
-      font-size: 15px;
-    }
+  font-family: inherit;
+  font-size: 14px;
+}
 
     button {
       border: none;
@@ -44,7 +51,10 @@
       cursor: pointer;
     }
 
-    button:active { transform: scale(0.99); }
+    button:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
     button.secondary { background: #334155; }
     button.light { background: #e5e7eb; color: #111827; }
     button.danger { background: var(--danger); }
@@ -172,12 +182,12 @@
     .view.active { display: block; }
 
     .card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 14px;
-      box-shadow: 0 6px 18px rgba(15, 23, 42, 0.05);
-    }
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 12px;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);
+}
 
     .stack { display: grid; gap: 12px; }
 
@@ -275,14 +285,18 @@
     }
 
     .movement-item {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 8px;
-      padding: 11px;
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      background: #fff;
-    }
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: #fff;
+}
+
+.movement-item > div:first-child {
+  min-width: 0;
+}
 
     .movement-item strong {
       display: block;
@@ -297,9 +311,10 @@
     }
 
     .amount {
-      font-weight: 800;
-      white-space: nowrap;
-    }
+  font-weight: 800;
+  white-space: nowrap;
+  font-size: 13px;
+}
 
     .amount.expense { color: var(--danger); }
     .amount.income { color: var(--ok); }
@@ -438,6 +453,163 @@
     }
 
     @media (min-width: 760px) {
+
+      .loading-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+  background: rgba(15, 23, 42, 0.45);
+}
+
+.loading-overlay.show {
+  display: flex;
+}
+
+.loading-box {
+  width: min(300px, 100%);
+  background: #fff;
+  border-radius: 18px;
+  padding: 18px;
+  text-align: center;
+  box-shadow: 0 20px 50px rgba(15, 23, 42, 0.25);
+}
+
+.loading-box strong {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 15px;
+}
+
+.loading-box span {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+@media (max-width: 480px) {
+  main {
+    padding: 8px;
+  }
+
+  header {
+    padding: 10px 10px;
+  }
+
+  .hello small {
+    font-size: 10px;
+  }
+
+  .hello strong {
+    font-size: 14px;
+  }
+
+  .header-actions {
+    gap: 5px;
+  }
+
+  .header-actions button {
+    padding: 8px 9px;
+    font-size: 12px;
+  }
+
+  .quick-grid {
+    gap: 6px;
+  }
+
+  .metric {
+    padding: 9px 7px;
+    border-radius: 13px;
+  }
+
+  .metric span {
+    font-size: 9.5px;
+    line-height: 1.15;
+  }
+
+  .metric strong {
+    font-size: 14px;
+  }
+
+  .card {
+    padding: 10px;
+    border-radius: 14px;
+  }
+
+  .section-title h2,
+  .section-title h3 {
+    font-size: 15px;
+  }
+
+  .section-title span {
+    font-size: 10px;
+  }
+
+  label {
+    font-size: 11px;
+    margin-bottom: 4px;
+  }
+
+  input,
+  select,
+  button {
+    padding: 10px;
+    font-size: 13px;
+    border-radius: 10px;
+  }
+
+  .form-one {
+    gap: 8px;
+  }
+
+  .two-cols {
+    gap: 8px;
+  }
+
+  .movement-item strong,
+  .decision-item strong {
+    font-size: 13px;
+  }
+
+  .movement-item small,
+  .decision-item span,
+  .category-item small {
+    font-size: 11px;
+  }
+
+  .bottom-nav {
+    padding: 6px 6px 7px;
+  }
+
+  .nav-btn {
+    padding: 7px 4px;
+    font-size: 11px;
+  }
+
+  canvas {
+    height: 200px;
+  }
+
+  .chart-box {
+    min-height: 245px;
+  }
+}
+
+@media (max-width: 360px) {
+  .two-cols {
+    grid-template-columns: 1fr;
+  }
+
+  .metric strong {
+    font-size: 13px;
+  }
+
+  .metric span {
+    font-size: 9px;
+  }
+}
       .app { padding-bottom: 0; }
       .bottom-nav {
         width: min(1120px, calc(100% - 24px));
@@ -477,6 +649,12 @@
   </style>
 </head>
 <body>
+  <div class="loading-overlay" id="loadingOverlay">
+  <div class="loading-box">
+    <strong id="loadingTitle">Guardando...</strong>
+    <span>No cierres esta pantalla.</span>
+  </div>
+</div>
   <section class="login-screen" id="loginScreen">
     <div class="login-card">
       <h1>Control de gastos</h1>
@@ -738,7 +916,7 @@
   </section>
 
   <script>
-    const API_URL = "https://script.google.com/macros/s/AKfycbz8lkq7P2HI0J7HLJYJI0PGBG1oMMTfD4LcMrR6I5hvbrDn6U4c_hFZys5d8bmblfNI/exec";
+    const API_URL = "https://script.google.com/macros/s/AKfycbxnkz1--8BLCvXVBisnGopzWNuNoSx9Q9gNasQyTf0y_hJiOj-teAxItjqcO655yyZx/exec";
 
     const state = {
       currentUser: null,
@@ -762,8 +940,23 @@
     const COLORS = ["#2563eb", "#16a34a", "#d97706", "#dc2626", "#7c3aed", "#0891b2", "#db2777", "#65a30d"];
 
     const $ = (id) => document.getElementById(id);
-    const money = (n) => `S/ ${Number(n || 0).toFixed(2)}`;
-    const toNumber = (v) => Number(v || 0);
+const money = (n) => `S/ ${Number(n || 0).toFixed(2)}`;
+const toNumber = (v) => Number(v || 0);
+
+let isSaving = false;
+
+function setLoading(active, message = "Guardando...") {
+  const overlay = $("loadingOverlay");
+  const title = $("loadingTitle");
+
+  if (title) title.textContent = message;
+  if (overlay) overlay.classList.toggle("show", active);
+
+  const saveBtn = $("btnSaveQuick");
+  if (saveBtn) saveBtn.disabled = active;
+
+  isSaving = active;
+}
     const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
     const todayISO = () => {
       const d = new Date();
@@ -1126,13 +1319,16 @@
     }
 
     function renderAll() {
-      refreshLoginUsers();
-      refreshFormOptions();
-      applyConfigToForm();
-      renderHome();
-      renderStats();
-      renderCategories();
-    }
+  refreshLoginUsers();
+  refreshFormOptions();
+  applyConfigToForm();
+  renderHome();
+  renderCategories();
+
+  if ($("view-stats").classList.contains("active")) {
+    renderStats();
+  }
+}
 
     function saveLocal() {
       localStorage.setItem("couple-expense-state", JSON.stringify({
@@ -1191,23 +1387,39 @@
     }
 
     async function apiPost(action, payload) {
-      if (!API_URL || API_URL.includes("PEGA_AQUI")) {
-        mutateLocal(action, payload);
-        saveLocal();
-        renderAll();
-        showStatus("Guardado en modo local.", "ok");
-        return;
-      }
+  if (isSaving) return;
 
-      const res = await fetch(API_URL, {
-        method: "POST",
-        body: JSON.stringify({ action, payload })
-      });
-      const data = await res.json();
-      if (!data.ok) throw new Error(data.message || "No se pudo guardar");
-      await apiGet();
-      showStatus("Guardado correctamente.", "ok");
+  setLoading(true, action === "addMovimiento" ? "Guardando movimiento..." : "Guardando...");
+
+  try {
+    if (!API_URL || API_URL.includes("PEGA_AQUI")) {
+      mutateLocal(action, payload);
+      saveLocal();
+      renderAll();
+      showStatus("Guardado en modo local.", "ok");
+      return;
     }
+
+    const res = await fetch(API_URL, {
+      method: "POST",
+      body: JSON.stringify({ action, payload })
+    });
+
+    const data = await res.json();
+
+    if (!data.ok) {
+      throw new Error(data.message || "No se pudo guardar");
+    }
+
+    mutateLocal(action, payload);
+    saveLocal();
+    renderAll();
+    showStatus("Guardado correctamente.", "ok");
+
+  } finally {
+    setLoading(false);
+  }
+}
 
     function login(userKey, password, remember) {
       const user = getUsers().find(u => u.key === userKey);
@@ -1257,14 +1469,22 @@
     }
 
     document.querySelectorAll(".nav-btn").forEach(btn => {
-      btn.addEventListener("click", () => {
-        document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("active"));
-        document.querySelectorAll(".view").forEach(v => v.classList.remove("active"));
-        btn.classList.add("active");
-        $("view-" + btn.dataset.view).classList.add("active");
-        renderAll();
-      });
-    });
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("active"));
+    document.querySelectorAll(".view").forEach(v => v.classList.remove("active"));
+
+    btn.classList.add("active");
+    $("view-" + btn.dataset.view).classList.add("active");
+
+    if (btn.dataset.view === "home") renderHome();
+    if (btn.dataset.view === "stats") renderStats();
+    if (btn.dataset.view === "config") {
+      refreshFormOptions();
+      applyConfigToForm();
+      renderCategories();
+    }
+  });
+});
 
     document.querySelectorAll(".segmented button").forEach(btn => {
       btn.addEventListener("click", () => {
@@ -1286,9 +1506,10 @@
       $("loginScreen").style.display = "flex";
     });
 
-    $("quickForm").addEventListener("submit", async (e) => {
-      e.preventDefault();
-      if (!state.currentUser) return;
+   $("quickForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  if (isSaving) return;
+  if (!state.currentUser) return;
       const type = $("quickType").value;
       const payload = {
         id: uid(),
@@ -1314,12 +1535,11 @@
       }
     });
 
-    $("statsPeriod").addEventListener("change", () => {
-      state.statsPeriod = $("statsPeriod").value;
-      saveLocal();
-      renderAll();
-    });
-
+   $("statsPeriod").addEventListener("change", () => {
+  state.statsPeriod = $("statsPeriod").value;
+  saveLocal();
+  renderStats();
+});
     $("btnReload").addEventListener("click", () => apiGet().catch(err => showStatus(err.message, "error")));
     $("btnPrint").addEventListener("click", () => window.print());
     $("btnPrintStats").addEventListener("click", () => window.print());
@@ -1367,7 +1587,16 @@
       }
     });
 
-    window.addEventListener("resize", () => renderAll());
+   let resizeTimer;
+
+window.addEventListener("resize", () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(() => {
+    if ($("view-stats").classList.contains("active")) {
+      renderStats();
+    }
+  }, 250);
+});
 
     $("quickDate").value = todayISO();
     loadLocal();
