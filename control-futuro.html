@@ -12,10 +12,12 @@
       --muted: #6b7280;
       --border: #d9e0ec;
       --primary: #2563eb;
+      --primary-dark: #1d4ed8;
       --danger: #dc2626;
       --ok: #16a34a;
       --warn: #d97706;
       --soft: #f8fafc;
+      --dark: #0f172a;
     }
 
     * { box-sizing: border-box; }
@@ -28,15 +30,24 @@
     }
 
     header {
-      background: #0f172a;
+      background: linear-gradient(135deg, #0f172a, #1e293b);
       color: #fff;
-      padding: 18px 14px;
-      text-align: center;
+      padding: 20px 14px;
+    }
+
+    .header-inner {
+      width: min(1200px, 100%);
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
     }
 
     header h1 {
       margin: 0 0 6px;
-      font-size: 22px;
+      font-size: 23px;
     }
 
     header p {
@@ -46,7 +57,7 @@
     }
 
     main {
-      width: min(1100px, 100%);
+      width: min(1200px, 100%);
       margin: 0 auto;
       padding: 14px;
     }
@@ -69,6 +80,7 @@
     .span-8 { grid-column: span 8; }
     .span-6 { grid-column: span 6; }
     .span-4 { grid-column: span 4; }
+    .span-3 { grid-column: span 3; }
 
     h2 {
       margin: 0 0 12px;
@@ -110,17 +122,23 @@
       font-weight: bold;
     }
 
-    button.secondary {
-      background: #334155;
+    button:hover { background: var(--primary-dark); }
+    button.secondary { background: #334155; }
+    button.secondary:hover { background: #1e293b; }
+    button.danger { background: var(--danger); }
+    button.danger:hover { background: #b91c1c; }
+    button.light { background: #e5e7eb; color: #111827; }
+    button.light:hover { background: #d1d5db; }
+
+    .top-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
     }
 
-    button.danger {
-      background: var(--danger);
-    }
-
-    button:disabled {
-      opacity: 0.55;
-      cursor: not-allowed;
+    .top-actions button {
+      width: auto;
+      padding: 9px 12px;
     }
 
     .form-grid {
@@ -128,6 +146,14 @@
       grid-template-columns: repeat(4, 1fr);
       gap: 10px;
       align-items: end;
+    }
+
+    .filters {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr 1fr 0.8fr;
+      gap: 10px;
+      align-items: end;
+      margin-bottom: 12px;
     }
 
     .summary {
@@ -205,6 +231,7 @@
       border-radius: 999px;
       font-size: 12px;
       background: #e5e7eb;
+      white-space: nowrap;
     }
 
     .badge.ok { background: #dcfce7; color: #166534; }
@@ -236,18 +263,18 @@
 
     .actions {
       display: flex;
-      gap: 8px;
+      gap: 6px;
       flex-wrap: wrap;
     }
 
     .actions button {
       width: auto;
-      padding: 8px 10px;
+      padding: 7px 9px;
       font-size: 12px;
     }
 
     .status {
-      margin: 10px 0 0;
+      margin: 10px 0 12px;
       padding: 10px;
       border-radius: 10px;
       background: #e0f2fe;
@@ -260,10 +287,51 @@
     .status.error { background: #fee2e2; color: #991b1b; }
     .status.ok { background: #dcfce7; color: #166534; }
 
-    @media (max-width: 780px) {
+    .chart-card {
+      min-height: 330px;
+    }
+
+    canvas {
+      width: 100%;
+      height: 260px;
+      display: block;
+    }
+
+    .lock-screen {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.92);
+      z-index: 999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .lock-box {
+      background: #fff;
+      width: min(380px, 100%);
+      border-radius: 18px;
+      padding: 20px;
+      box-shadow: 0 20px 70px rgba(0,0,0,0.35);
+    }
+
+    .lock-box h2 { margin-bottom: 6px; }
+    .lock-box p { color: var(--muted); font-size: 13px; margin-top: 0; }
+
+    @media print {
+      header, .tabs, .filters, .top-actions, form, .actions, #globalStatus, .no-print { display: none !important; }
+      body { background: #fff; }
+      main { width: 100%; padding: 0; }
+      .card { box-shadow: none; border: 1px solid #ddd; page-break-inside: avoid; }
+      .tab { display: block !important; }
+      .tab:not(#tab-resumen) { display: none !important; }
+    }
+
+    @media (max-width: 850px) {
       main { padding: 10px; }
-      .span-8, .span-6, .span-4 { grid-column: span 12; }
-      .form-grid, .summary { grid-template-columns: 1fr; }
+      .span-8, .span-6, .span-4, .span-3 { grid-column: span 12; }
+      .form-grid, .summary, .filters { grid-template-columns: 1fr; }
       table, thead, tbody, th, td, tr { display: block; }
       thead { display: none; }
       tr {
@@ -288,41 +356,106 @@
   </style>
 </head>
 <body>
+  <div class="lock-screen" id="lockScreen">
+    <div class="lock-box">
+      <h2>Acceso privado</h2>
+      <p>Ingresa el PIN configurado para ver el control de gastos.</p>
+      <label>PIN</label>
+      <input type="password" id="pinInput" placeholder="Ej. 1234" />
+      <br><br>
+      <button id="btnUnlock">Ingresar</button>
+      <p class="small">Este bloqueo es local y básico. Para seguridad real se necesita login con usuarios.</p>
+    </div>
+  </div>
+
   <header>
-    <h1>Control de gastos en pareja</h1>
-    <p>Registra ingresos, gastos, presupuestos y alertas de forma simple.</p>
+    <div class="header-inner">
+      <div>
+        <h1>Control de gastos en pareja</h1>
+        <p>Ingresos, gastos, presupuestos, ahorro, alertas y gráficos.</p>
+      </div>
+      <div class="top-actions">
+        <button class="secondary" id="btnPrint">Exportar PDF</button>
+        <button class="light" id="btnReloadTop">Recargar</button>
+      </div>
+    </div>
   </header>
 
   <main>
     <section class="card span-12">
       <div class="tabs">
-        <button class="tab-btn active" data-tab="resumen">Resumen</button>
+        <button class="tab-btn active" data-tab="resumen">Resumen visual</button>
         <button class="tab-btn" data-tab="movimientos">Movimientos</button>
-        <button class="tab-btn" data-tab="categorias">Categorías y presupuestos</button>
+        <button class="tab-btn" data-tab="categorias">Categorías</button>
         <button class="tab-btn" data-tab="configuracion">Configuración</button>
       </div>
 
       <div id="globalStatus" class="status"></div>
 
+      <div class="filters no-print">
+        <div>
+          <label>Periodo</label>
+          <select id="filterPeriod">
+            <option value="today">Hoy</option>
+            <option value="week">Esta semana</option>
+            <option value="month" selected>Este mes</option>
+            <option value="all">Todo</option>
+            <option value="custom">Rango personalizado</option>
+          </select>
+        </div>
+        <div>
+          <label>Fecha inicio</label>
+          <input type="date" id="filterStart" />
+        </div>
+        <div>
+          <label>Fecha fin</label>
+          <input type="date" id="filterEnd" />
+        </div>
+        <button id="btnApplyFilter">Aplicar</button>
+      </div>
+
       <div id="tab-resumen" class="tab active">
         <h2>Resumen general</h2>
         <div class="summary">
-          <div class="metric ok"><span>Ingresos totales</span><strong id="mIngresos">S/ 0.00</strong></div>
-          <div class="metric danger"><span>Gastos totales</span><strong id="mGastos">S/ 0.00</strong></div>
+          <div class="metric ok"><span>Ingresos del periodo</span><strong id="mIngresos">S/ 0.00</strong></div>
+          <div class="metric danger"><span>Gastos del periodo</span><strong id="mGastos">S/ 0.00</strong></div>
           <div class="metric"><span>Ahorro sugerido</span><strong id="mAhorro">S/ 0.00</strong></div>
           <div class="metric warn"><span>Saldo disponible</span><strong id="mSaldo">S/ 0.00</strong></div>
         </div>
+
         <br />
+
+        <div class="grid">
+          <div class="card span-6 chart-card">
+            <h3>Gastos por categoría</h3>
+            <canvas id="chartCategorias"></canvas>
+          </div>
+          <div class="card span-6 chart-card">
+            <h3>Gastos por persona</h3>
+            <canvas id="chartPersonas"></canvas>
+          </div>
+          <div class="card span-6 chart-card">
+            <h3>Evolución diaria: ingresos vs gastos</h3>
+            <canvas id="chartLinea"></canvas>
+          </div>
+          <div class="card span-6 chart-card">
+            <h3>Medios de pago más usados</h3>
+            <canvas id="chartMedios"></canvas>
+          </div>
+        </div>
+
+        <br />
+
         <div class="grid">
           <div class="card span-6">
-            <h3>Gasto por categoría</h3>
+            <h3>Presupuesto por categoría</h3>
             <table>
               <thead><tr><th>Categoría</th><th>Gastado</th><th>Presupuesto</th><th>Uso</th><th>Estado</th></tr></thead>
               <tbody id="tablaCategoriasResumen"></tbody>
             </table>
           </div>
           <div class="card span-6">
-            <h3>Gasto por persona</h3>
+            <h3>Consolidado por persona</h3>
             <table>
               <thead><tr><th>Persona</th><th>Ingresos</th><th>Gastos</th><th>Saldo</th></tr></thead>
               <tbody id="tablaPersonasResumen"></tbody>
@@ -332,8 +465,9 @@
       </div>
 
       <div id="tab-movimientos" class="tab">
-        <h2>Registrar movimiento</h2>
+        <h2 id="movFormTitle">Registrar movimiento</h2>
         <form id="formMovimiento" class="form-grid">
+          <input type="hidden" id="movId" />
           <div>
             <label>Fecha</label>
             <input type="date" id="movFecha" required />
@@ -379,23 +513,24 @@
             <label>Descripción</label>
             <input type="text" id="movDescripcion" placeholder="Ej. mercado, alquiler, sueldo" required />
           </div>
-          <button type="submit">Guardar movimiento</button>
-          <button type="button" class="secondary" id="btnRecargar">Recargar datos</button>
+          <button type="submit" id="btnSaveMov">Guardar movimiento</button>
+          <button type="button" class="light" id="btnCancelMov">Cancelar edición</button>
         </form>
 
         <br />
-        <h3>Últimos movimientos</h3>
+        <h3>Movimientos del periodo</h3>
         <table>
           <thead>
-            <tr><th>Fecha</th><th>Tipo</th><th>Persona</th><th>Alcance</th><th>Categoría</th><th>Medio</th><th>Monto</th><th>Descripción</th></tr>
+            <tr><th>Fecha</th><th>Tipo</th><th>Persona</th><th>Alcance</th><th>Categoría</th><th>Medio</th><th>Monto</th><th>Descripción</th><th>Acciones</th></tr>
           </thead>
           <tbody id="tablaMovimientos"></tbody>
         </table>
       </div>
 
       <div id="tab-categorias" class="tab">
-        <h2>Categorías y presupuestos</h2>
+        <h2 id="catFormTitle">Categorías y presupuestos</h2>
         <form id="formCategoria" class="form-grid">
+          <input type="hidden" id="catId" />
           <div>
             <label>Nombre de categoría</label>
             <input type="text" id="catNombre" placeholder="Ej. Alquiler, comida, salidas" required />
@@ -415,11 +550,12 @@
             <label>Presupuesto mensual</label>
             <input type="number" id="catPresupuesto" min="0" step="0.01" placeholder="0.00" required />
           </div>
-          <button type="submit">Guardar categoría</button>
+          <button type="submit" id="btnSaveCat">Guardar categoría</button>
+          <button type="button" class="light" id="btnCancelCat">Cancelar edición</button>
         </form>
         <br />
         <table>
-          <thead><tr><th>Categoría</th><th>Tipo</th><th>Responsable</th><th>Presupuesto</th></tr></thead>
+          <thead><tr><th>Categoría</th><th>Tipo</th><th>Responsable</th><th>Presupuesto</th><th>Acciones</th></tr></thead>
           <tbody id="tablaCategorias"></tbody>
         </table>
       </div>
@@ -459,15 +595,19 @@
             <label>Ahorro individual miembro 2</label>
             <input type="number" id="cfgAhorro2" min="0" step="0.01" value="0" />
           </div>
+          <div>
+            <label>PIN local opcional</label>
+            <input type="password" id="cfgPin" placeholder="Déjalo vacío si no quieres bloqueo" />
+          </div>
           <button type="submit">Guardar configuración</button>
         </form>
-        <p class="small">Regla base: el sistema compara los gastos reales contra los presupuestos por categoría y muestra alerta cuando se supera el 90% o el 100%.</p>
+        <p class="small">El PIN local es una protección básica visual. Para seguridad real se debe implementar autenticación con usuarios y permisos.</p>
       </div>
     </section>
   </main>
 
   <script>
-    const API_URL = "https://script.google.com/macros/s/AKfycbyJ_zuhFR-QxtnoJqFHYMvP2NeardUL9kd6Ng7q1z5LMOAYK2YE-6CP935Gi3l7AdFk/exec";
+    const API_URL = "https://script.google.com/macros/s/AKfycbzPXVdViDEc5kxMVQRYBiUg4_EVmFNAkI0wwoT597UPm2ESJa42NU7yvKVKVPyH7e7k/exec";
 
     const state = {
       config: {
@@ -478,11 +618,19 @@
         ingresoConjunto: 0,
         ahorroComunPct: 10,
         ahorro1: 0,
-        ahorro2: 0
+        ahorro2: 0,
+        pin: ""
       },
       categorias: [],
-      movimientos: []
+      movimientos: [],
+      filter: {
+        period: "month",
+        start: "",
+        end: ""
+      }
     };
+
+    const COLORS = ["#2563eb", "#16a34a", "#d97706", "#dc2626", "#7c3aed", "#0891b2", "#db2777", "#65a30d"];
 
     const $ = (id) => document.getElementById(id);
     const money = (n) => `S/ ${Number(n || 0).toFixed(2)}`;
@@ -503,6 +651,7 @@
     }
 
     function fillSelect(select, values) {
+      const current = select.value;
       select.innerHTML = "";
       values.forEach(v => {
         const opt = document.createElement("option");
@@ -510,6 +659,7 @@
         opt.textContent = v;
         select.appendChild(opt);
       });
+      if (values.includes(current)) select.value = current;
     }
 
     function refreshSelectors() {
@@ -528,14 +678,72 @@
       $("cfgAhorroComun").value = state.config.ahorroComunPct || 0;
       $("cfgAhorro1").value = state.config.ahorro1 || 0;
       $("cfgAhorro2").value = state.config.ahorro2 || 0;
+      $("cfgPin").value = state.config.pin || "";
+    }
+
+    function setPeriodDates() {
+      const period = $("filterPeriod").value;
+      const now = new Date();
+      const y = now.getFullYear();
+      const m = now.getMonth();
+      let start = "";
+      let end = "";
+
+      if (period === "today") {
+        start = todayISO();
+        end = todayISO();
+      }
+
+      if (period === "week") {
+        const day = now.getDay() || 7;
+        const monday = new Date(now);
+        monday.setDate(now.getDate() - day + 1);
+        start = monday.toISOString().slice(0, 10);
+        end = todayISO();
+      }
+
+      if (period === "month") {
+        start = new Date(y, m, 1).toISOString().slice(0, 10);
+        end = todayISO();
+      }
+
+      if (period === "all") {
+        start = "";
+        end = "";
+      }
+
+      if (period !== "custom") {
+        $("filterStart").value = start;
+        $("filterEnd").value = end;
+      }
+    }
+
+    function applyFilter() {
+      state.filter.period = $("filterPeriod").value;
+      state.filter.start = $("filterStart").value;
+      state.filter.end = $("filterEnd").value;
+      saveLocal();
+      renderAll();
+    }
+
+    function getFilteredMovimientos() {
+      const start = state.filter.start;
+      const end = state.filter.end;
+      return state.movimientos.filter(m => {
+        if (!m.fecha) return true;
+        if (start && m.fecha < start) return false;
+        if (end && m.fecha > end) return false;
+        return true;
+      });
     }
 
     function getResumen() {
-      const ingresosRegistrados = state.movimientos
+      const movimientos = getFilteredMovimientos();
+      const ingresosRegistrados = movimientos
         .filter(m => m.tipo === "Ingreso")
         .reduce((s, m) => s + toNumber(m.monto), 0);
 
-      const gastosRegistrados = state.movimientos
+      const gastosRegistrados = movimientos
         .filter(m => m.tipo === "Gasto")
         .reduce((s, m) => s + toNumber(m.monto), 0);
 
@@ -549,6 +757,15 @@
       return { ingresosBase, gastosRegistrados, ahorroSugerido, saldo };
     }
 
+    function groupSum(items, keyGetter, filterFn) {
+      const map = {};
+      items.filter(filterFn || (() => true)).forEach(item => {
+        const key = keyGetter(item) || "Sin clasificar";
+        map[key] = (map[key] || 0) + toNumber(item.monto);
+      });
+      return map;
+    }
+
     function renderResumen() {
       const r = getResumen();
       $("mIngresos").textContent = money(r.ingresosBase);
@@ -558,11 +775,13 @@
 
       renderTablaCategoriasResumen();
       renderTablaPersonasResumen();
+      renderCharts();
     }
 
     function renderTablaCategoriasResumen() {
       const tbody = $("tablaCategoriasResumen");
       tbody.innerHTML = "";
+      const movimientos = getFilteredMovimientos();
 
       if (!state.categorias.length) {
         tbody.innerHTML = `<tr><td data-label="Mensaje" colspan="5">Aún no hay categorías registradas.</td></tr>`;
@@ -570,7 +789,7 @@
       }
 
       state.categorias.forEach(cat => {
-        const gastado = state.movimientos
+        const gastado = movimientos
           .filter(m => m.tipo === "Gasto" && m.categoria === cat.nombre)
           .reduce((s, m) => s + toNumber(m.monto), 0);
         const presupuesto = toNumber(cat.presupuesto);
@@ -597,6 +816,7 @@
     function renderTablaPersonasResumen() {
       const tbody = $("tablaPersonasResumen");
       tbody.innerHTML = "";
+      const movimientos = getFilteredMovimientos();
 
       const personas = [
         { nombre: state.config.persona1 || "Persona 1", ingreso: toNumber(state.config.ingreso1) },
@@ -605,11 +825,11 @@
       ];
 
       personas.forEach(p => {
-        const ingresosMov = state.movimientos
+        const ingresosMov = movimientos
           .filter(m => m.tipo === "Ingreso" && m.persona === p.nombre)
           .reduce((s, m) => s + toNumber(m.monto), 0);
         const ingresos = ingresosMov > 0 ? ingresosMov : p.ingreso;
-        const gastos = state.movimientos
+        const gastos = movimientos
           .filter(m => m.tipo === "Gasto" && m.persona === p.nombre)
           .reduce((s, m) => s + toNumber(m.monto), 0);
         const saldo = ingresos - gastos;
@@ -627,10 +847,10 @@
     function renderMovimientos() {
       const tbody = $("tablaMovimientos");
       tbody.innerHTML = "";
-      const data = [...state.movimientos].sort((a, b) => String(b.fecha).localeCompare(String(a.fecha))).slice(0, 50);
+      const data = [...getFilteredMovimientos()].sort((a, b) => String(b.fecha).localeCompare(String(a.fecha))).slice(0, 100);
 
       if (!data.length) {
-        tbody.innerHTML = `<tr><td data-label="Mensaje" colspan="8">Aún no hay movimientos registrados.</td></tr>`;
+        tbody.innerHTML = `<tr><td data-label="Mensaje" colspan="9">Aún no hay movimientos en este periodo.</td></tr>`;
         return;
       }
 
@@ -646,6 +866,12 @@
           <td data-label="Medio">${m.medio}</td>
           <td data-label="Monto">${money(m.monto)}</td>
           <td data-label="Descripción">${m.descripcion}</td>
+          <td data-label="Acciones">
+            <div class="actions">
+              <button class="light" onclick="editMovimiento('${m.id}')">Editar</button>
+              <button class="danger" onclick="deleteMovimiento('${m.id}')">Eliminar</button>
+            </div>
+          </td>
         `;
         tbody.appendChild(tr);
       });
@@ -656,7 +882,7 @@
       tbody.innerHTML = "";
 
       if (!state.categorias.length) {
-        tbody.innerHTML = `<tr><td data-label="Mensaje" colspan="4">Aún no hay categorías registradas.</td></tr>`;
+        tbody.innerHTML = `<tr><td data-label="Mensaje" colspan="5">Aún no hay categorías registradas.</td></tr>`;
         return;
       }
 
@@ -667,9 +893,209 @@
           <td data-label="Tipo"><span class="badge info">${c.tipo}</span></td>
           <td data-label="Responsable">${c.persona}</td>
           <td data-label="Presupuesto">${money(c.presupuesto)}</td>
+          <td data-label="Acciones">
+            <div class="actions">
+              <button class="light" onclick="editCategoria('${c.id}')">Editar</button>
+              <button class="danger" onclick="deleteCategoria('${c.id}')">Eliminar</button>
+            </div>
+          </td>
         `;
         tbody.appendChild(tr);
       });
+    }
+
+    function setupCanvas(canvas) {
+      const rect = canvas.getBoundingClientRect();
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = Math.max(320, rect.width) * dpr;
+      canvas.height = 260 * dpr;
+      const ctx = canvas.getContext("2d");
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      return { ctx, width: Math.max(320, rect.width), height: 260 };
+    }
+
+    function drawEmpty(ctx, width, height, text) {
+      ctx.clearRect(0, 0, width, height);
+      ctx.fillStyle = "#64748b";
+      ctx.font = "13px Arial";
+      ctx.textAlign = "center";
+      ctx.fillText(text, width / 2, height / 2);
+    }
+
+    function drawDoughnut(canvas, map) {
+      const { ctx, width, height } = setupCanvas(canvas);
+      ctx.clearRect(0, 0, width, height);
+      const entries = Object.entries(map).filter(([,v]) => v > 0);
+      const total = entries.reduce((s, [,v]) => s + v, 0);
+      if (!total) return drawEmpty(ctx, width, height, "Sin gastos para graficar");
+
+      const cx = width * 0.32;
+      const cy = height * 0.5;
+      const r = 78;
+      let start = -Math.PI / 2;
+
+      entries.forEach(([label, value], i) => {
+        const angle = (value / total) * Math.PI * 2;
+        ctx.beginPath();
+        ctx.moveTo(cx, cy);
+        ctx.arc(cx, cy, r, start, start + angle);
+        ctx.closePath();
+        ctx.fillStyle = COLORS[i % COLORS.length];
+        ctx.fill();
+        start += angle;
+      });
+
+      ctx.beginPath();
+      ctx.arc(cx, cy, 42, 0, Math.PI * 2);
+      ctx.fillStyle = "#fff";
+      ctx.fill();
+
+      ctx.fillStyle = "#111827";
+      ctx.font = "bold 14px Arial";
+      ctx.textAlign = "center";
+      ctx.fillText(money(total), cx, cy + 4);
+
+      ctx.textAlign = "left";
+      ctx.font = "12px Arial";
+      entries.slice(0, 8).forEach(([label, value], i) => {
+        const y = 32 + i * 25;
+        ctx.fillStyle = COLORS[i % COLORS.length];
+        ctx.fillRect(width * 0.58, y - 9, 12, 12);
+        ctx.fillStyle = "#334155";
+        ctx.fillText(`${label}: ${money(value)}`, width * 0.58 + 18, y);
+      });
+    }
+
+    function drawBars(canvas, map) {
+      const { ctx, width, height } = setupCanvas(canvas);
+      ctx.clearRect(0, 0, width, height);
+      const entries = Object.entries(map).filter(([,v]) => v > 0);
+      const max = Math.max(...entries.map(([,v]) => v), 0);
+      if (!max) return drawEmpty(ctx, width, height, "Sin datos para graficar");
+
+      const padding = 38;
+      const barArea = width - padding * 2;
+      const barWidth = Math.max(28, barArea / entries.length - 18);
+
+      ctx.strokeStyle = "#e5e7eb";
+      ctx.beginPath();
+      ctx.moveTo(padding, height - 42);
+      ctx.lineTo(width - 12, height - 42);
+      ctx.stroke();
+
+      entries.forEach(([label, value], i) => {
+        const x = padding + i * (barWidth + 18);
+        const h = (value / max) * 150;
+        const y = height - 42 - h;
+        ctx.fillStyle = COLORS[i % COLORS.length];
+        ctx.fillRect(x, y, barWidth, h);
+        ctx.fillStyle = "#111827";
+        ctx.font = "12px Arial";
+        ctx.textAlign = "center";
+        ctx.fillText(money(value), x + barWidth / 2, y - 6);
+        ctx.fillStyle = "#475569";
+        ctx.fillText(label.slice(0, 14), x + barWidth / 2, height - 20);
+      });
+    }
+
+    function drawHorizontalBars(canvas, map) {
+      const { ctx, width, height } = setupCanvas(canvas);
+      ctx.clearRect(0, 0, width, height);
+      const entries = Object.entries(map).filter(([,v]) => v > 0).sort((a,b) => b[1] - a[1]).slice(0, 7);
+      const max = Math.max(...entries.map(([,v]) => v), 0);
+      if (!max) return drawEmpty(ctx, width, height, "Sin medios de pago registrados");
+
+      entries.forEach(([label, value], i) => {
+        const y = 28 + i * 31;
+        const w = (value / max) * (width - 165);
+        ctx.fillStyle = "#475569";
+        ctx.font = "12px Arial";
+        ctx.textAlign = "left";
+        ctx.fillText(label, 12, y + 10);
+        ctx.fillStyle = COLORS[i % COLORS.length];
+        ctx.fillRect(112, y, w, 18);
+        ctx.fillStyle = "#111827";
+        ctx.fillText(money(value), 118 + w, y + 13);
+      });
+    }
+
+    function drawLineChart(canvas, movimientos) {
+      const { ctx, width, height } = setupCanvas(canvas);
+      ctx.clearRect(0, 0, width, height);
+      const byDate = {};
+
+      movimientos.forEach(m => {
+        if (!m.fecha) return;
+        if (!byDate[m.fecha]) byDate[m.fecha] = { ingreso: 0, gasto: 0 };
+        if (m.tipo === "Ingreso") byDate[m.fecha].ingreso += toNumber(m.monto);
+        if (m.tipo === "Gasto") byDate[m.fecha].gasto += toNumber(m.monto);
+      });
+
+      const dates = Object.keys(byDate).sort();
+      if (!dates.length) return drawEmpty(ctx, width, height, "Sin movimientos para graficar");
+
+      const max = Math.max(...dates.flatMap(d => [byDate[d].ingreso, byDate[d].gasto]), 1);
+      const left = 42, right = 15, top = 22, bottom = 42;
+      const chartW = width - left - right;
+      const chartH = height - top - bottom;
+      const xFor = i => left + (dates.length === 1 ? chartW / 2 : (i / (dates.length - 1)) * chartW);
+      const yFor = v => top + chartH - (v / max) * chartH;
+
+      ctx.strokeStyle = "#e5e7eb";
+      ctx.beginPath();
+      ctx.moveTo(left, top);
+      ctx.lineTo(left, top + chartH);
+      ctx.lineTo(left + chartW, top + chartH);
+      ctx.stroke();
+
+      function line(type, color) {
+        ctx.beginPath();
+        dates.forEach((d, i) => {
+          const x = xFor(i);
+          const y = yFor(byDate[d][type]);
+          if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+        });
+        ctx.strokeStyle = color;
+        ctx.lineWidth = 2;
+        ctx.stroke();
+        dates.forEach((d, i) => {
+          const x = xFor(i);
+          const y = yFor(byDate[d][type]);
+          ctx.beginPath();
+          ctx.arc(x, y, 3, 0, Math.PI * 2);
+          ctx.fillStyle = color;
+          ctx.fill();
+        });
+      }
+
+      line("ingreso", "#16a34a");
+      line("gasto", "#dc2626");
+
+      ctx.font = "12px Arial";
+      ctx.fillStyle = "#16a34a";
+      ctx.fillText("Ingresos", left, 14);
+      ctx.fillStyle = "#dc2626";
+      ctx.fillText("Gastos", left + 75, 14);
+      ctx.fillStyle = "#475569";
+      ctx.textAlign = "center";
+      const sample = dates.filter((_, i) => i % Math.ceil(dates.length / 5) === 0);
+      sample.forEach(d => {
+        const i = dates.indexOf(d);
+        ctx.fillText(d.slice(5), xFor(i), height - 18);
+      });
+    }
+
+    function renderCharts() {
+      const movimientos = getFilteredMovimientos();
+      const gastos = movimientos.filter(m => m.tipo === "Gasto");
+      const gastosPorCategoria = groupSum(gastos, m => m.categoria);
+      const gastosPorPersona = groupSum(gastos, m => m.persona);
+      const gastosPorMedio = groupSum(gastos, m => m.medio);
+
+      drawDoughnut($("chartCategorias"), gastosPorCategoria);
+      drawBars($("chartPersonas"), gastosPorPersona);
+      drawLineChart($("chartLinea"), movimientos);
+      drawHorizontalBars($("chartMedios"), gastosPorMedio);
     }
 
     function renderAll() {
@@ -678,6 +1104,17 @@
       renderResumen();
       renderMovimientos();
       renderCategorias();
+      checkLock();
+    }
+
+    function mutateLocal(action, payload) {
+      if (action === "saveConfig") state.config = payload;
+      if (action === "addCategoria") state.categorias.push(payload);
+      if (action === "updateCategoria") state.categorias = state.categorias.map(c => c.id === payload.id ? payload : c);
+      if (action === "deleteCategoria") state.categorias = state.categorias.filter(c => c.id !== payload.id);
+      if (action === "addMovimiento") state.movimientos.push(payload);
+      if (action === "updateMovimiento") state.movimientos = state.movimientos.map(m => m.id === payload.id ? payload : m);
+      if (action === "deleteMovimiento") state.movimientos = state.movimientos.filter(m => m.id !== payload.id);
     }
 
     async function apiGet() {
@@ -688,6 +1125,7 @@
       }
       const res = await fetch(API_URL);
       const data = await res.json();
+      if (!data.ok) throw new Error(data.message || "No se pudo cargar la información");
       state.config = data.config || state.config;
       state.categorias = data.categorias || [];
       state.movimientos = data.movimientos || [];
@@ -697,9 +1135,7 @@
 
     async function apiPost(action, payload) {
       if (!API_URL || API_URL.includes("PEGA_AQUI")) {
-        if (action === "saveConfig") state.config = payload;
-        if (action === "addCategoria") state.categorias.push(payload);
-        if (action === "addMovimiento") state.movimientos.push(payload);
+        mutateLocal(action, payload);
         saveLocal();
         renderAll();
         showStatus("Guardado en modo local. Para sincronizar usa Apps Script.", "ok");
@@ -717,17 +1153,21 @@
     }
 
     function saveLocal() {
-      localStorage.setItem("pareja-control-data", JSON.stringify(state));
+      localStorage.setItem("pareja-control-data-v2", JSON.stringify(state));
     }
 
     function loadLocal() {
-      const raw = localStorage.getItem("pareja-control-data");
+      const raw = localStorage.getItem("pareja-control-data-v2") || localStorage.getItem("pareja-control-data");
       if (raw) {
         const data = JSON.parse(raw);
-        state.config = data.config || state.config;
+        state.config = { ...state.config, ...(data.config || {}) };
         state.categorias = data.categorias || [];
         state.movimientos = data.movimientos || [];
+        state.filter = { ...state.filter, ...(data.filter || {}) };
       }
+      $("filterPeriod").value = state.filter.period || "month";
+      $("filterStart").value = state.filter.start || "";
+      $("filterEnd").value = state.filter.end || "";
       renderAll();
     }
 
@@ -743,14 +1183,93 @@
       }
     }
 
+    function resetMovimientoForm() {
+      $("movId").value = "";
+      $("movFecha").value = todayISO();
+      $("movTipo").value = "Ingreso";
+      $("movAlcance").value = "Compartido";
+      $("movMonto").value = "";
+      $("movDescripcion").value = "";
+      $("movFormTitle").textContent = "Registrar movimiento";
+      $("btnSaveMov").textContent = "Guardar movimiento";
+    }
+
+    window.editMovimiento = function(id) {
+      const m = state.movimientos.find(x => x.id === id);
+      if (!m) return;
+      $("movId").value = m.id;
+      $("movFecha").value = m.fecha;
+      $("movTipo").value = m.tipo;
+      $("movPersona").value = m.persona;
+      $("movAlcance").value = m.alcance;
+      $("movCategoria").value = m.categoria;
+      $("movMedio").value = m.medio;
+      $("movMonto").value = m.monto;
+      $("movDescripcion").value = m.descripcion;
+      $("movFormTitle").textContent = "Editar movimiento";
+      $("btnSaveMov").textContent = "Actualizar movimiento";
+      document.querySelector('[data-tab="movimientos"]').click();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    };
+
+    window.deleteMovimiento = async function(id) {
+      if (!confirm("¿Eliminar este movimiento?")) return;
+      try { await apiPost("deleteMovimiento", { id }); }
+      catch (err) { showStatus(err.message, "error"); }
+    };
+
+    function resetCategoriaForm() {
+      $("catId").value = "";
+      $("catNombre").value = "";
+      $("catTipo").value = "Compartida";
+      $("catPresupuesto").value = "";
+      $("catFormTitle").textContent = "Categorías y presupuestos";
+      $("btnSaveCat").textContent = "Guardar categoría";
+    }
+
+    window.editCategoria = function(id) {
+      const c = state.categorias.find(x => x.id === id);
+      if (!c) return;
+      $("catId").value = c.id;
+      $("catNombre").value = c.nombre;
+      $("catTipo").value = c.tipo;
+      $("catPersona").value = c.persona;
+      $("catPresupuesto").value = c.presupuesto;
+      $("catFormTitle").textContent = "Editar categoría";
+      $("btnSaveCat").textContent = "Actualizar categoría";
+    };
+
+    window.deleteCategoria = async function(id) {
+      const c = state.categorias.find(x => x.id === id);
+      if (!c) return;
+      const hasMovements = state.movimientos.some(m => m.categoria === c.nombre);
+      if (hasMovements && !confirm("Esta categoría tiene movimientos. Si la eliminas, esos movimientos conservarán el nombre anterior. ¿Continuar?")) return;
+      if (!hasMovements && !confirm("¿Eliminar esta categoría?")) return;
+      try { await apiPost("deleteCategoria", { id }); }
+      catch (err) { showStatus(err.message, "error"); }
+    };
+
+    function checkLock() {
+      const pin = String(state.config.pin || "").trim();
+      const unlocked = sessionStorage.getItem("pareja-unlocked") === "1";
+      $("lockScreen").style.display = pin && !unlocked ? "flex" : "none";
+    }
+
     document.querySelectorAll(".tab-btn").forEach(btn => {
       btn.addEventListener("click", () => {
         document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
         document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
         btn.classList.add("active");
         $("tab-" + btn.dataset.tab).classList.add("active");
+        renderCharts();
       });
     });
+
+    $("filterPeriod").addEventListener("change", () => {
+      setPeriodDates();
+      applyFilter();
+    });
+    $("btnApplyFilter").addEventListener("click", applyFilter);
 
     $("formConfig").addEventListener("submit", async (e) => {
       e.preventDefault();
@@ -762,36 +1281,43 @@
         ingresoConjunto: toNumber($("cfgIngresoConjunto").value),
         ahorroComunPct: toNumber($("cfgAhorroComun").value),
         ahorro1: toNumber($("cfgAhorro1").value),
-        ahorro2: toNumber($("cfgAhorro2").value)
+        ahorro2: toNumber($("cfgAhorro2").value),
+        pin: $("cfgPin").value.trim()
       };
-      try { await apiPost("saveConfig", payload); }
+      try {
+        await apiPost("saveConfig", payload);
+        if (!payload.pin) sessionStorage.removeItem("pareja-unlocked");
+      }
       catch (err) { showStatus(err.message, "error"); }
     });
 
     $("formCategoria").addEventListener("submit", async (e) => {
       e.preventDefault();
+      const id = $("catId").value || uid();
       const nombre = $("catNombre").value.trim();
-      if (state.categorias.some(c => c.nombre.toLowerCase() === nombre.toLowerCase())) {
+      const duplicated = state.categorias.some(c => c.id !== id && c.nombre.toLowerCase() === nombre.toLowerCase());
+      if (duplicated) {
         showStatus("Esa categoría ya existe.", "error");
         return;
       }
       const payload = {
-        id: uid(),
+        id,
         nombre,
         tipo: $("catTipo").value,
         persona: $("catPersona").value,
         presupuesto: toNumber($("catPresupuesto").value)
       };
       try {
-        await apiPost("addCategoria", payload);
-        e.target.reset();
+        await apiPost($("catId").value ? "updateCategoria" : "addCategoria", payload);
+        resetCategoriaForm();
       } catch (err) { showStatus(err.message, "error"); }
     });
 
     $("formMovimiento").addEventListener("submit", async (e) => {
       e.preventDefault();
+      const id = $("movId").value || uid();
       const payload = {
-        id: uid(),
+        id,
         fecha: $("movFecha").value,
         tipo: $("movTipo").value,
         persona: $("movPersona").value,
@@ -802,15 +1328,31 @@
         descripcion: $("movDescripcion").value.trim()
       };
       try {
-        await apiPost("addMovimiento", payload);
-        $("movMonto").value = "";
-        $("movDescripcion").value = "";
+        await apiPost($("movId").value ? "updateMovimiento" : "addMovimiento", payload);
+        resetMovimientoForm();
       } catch (err) { showStatus(err.message, "error"); }
     });
 
-    $("btnRecargar").addEventListener("click", apiGet);
+    $("btnCancelMov").addEventListener("click", resetMovimientoForm);
+    $("btnCancelCat").addEventListener("click", resetCategoriaForm);
+    $("btnReloadTop").addEventListener("click", () => apiGet().catch(err => showStatus(err.message, "error")));
+    $("btnPrint").addEventListener("click", () => window.print());
+
+    $("btnUnlock").addEventListener("click", () => {
+      const entered = $("pinInput").value.trim();
+      if (entered === String(state.config.pin || "").trim()) {
+        sessionStorage.setItem("pareja-unlocked", "1");
+        checkLock();
+      } else {
+        alert("PIN incorrecto");
+      }
+    });
+
+    window.addEventListener("resize", () => renderCharts());
 
     $("movFecha").value = todayISO();
+    setPeriodDates();
+    applyFilter();
     loadLocal();
     seedIfEmpty();
     apiGet().catch(() => {
